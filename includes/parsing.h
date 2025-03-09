@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:02:06 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 05:39:16 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/08 22:41:20 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,19 @@
 # define ERROR_OPEN "\e[31mNo file exist : "
 # define ERROR_TEXTURE_FILE "\e[31mError Textures : "
 # define ERROR_COLORS "\e[31mError Colors : "
+# define ERROR_DUPLICATE_ELEMENTS "\e[31mDuplicate elements : "
+# define ERROR_UNKNOW_TYPE "\e[31mUnknow type : "
 # define ERROR_MISSING_COLORS "\e[31mMissing Colors !"
 # define ERROR_MISSING_TEXTURES "\e[31mMissing Textures !"
 # define ERROR_MAP_NO_1_PLAYER "\e[31mNo or more than 1 player int he map !"
 # define ERROR_MAP_WALLS "\e[31mBad build walls int the map !"
 # define ERROR_MAP_BAD_ELEMENTS "\e[31mThere is bad elements in the map !"
 
+# define TRUE 1
+# define FALSE 0
+
 int		parsing(int ac, char **av, t_data *data);
-int		print_error(char *str, char *arg);
+int		print_error(char *str, char *arg, int boolean);
 int		error_wrong_line(int fd);
 int		ft_strlen_whitespace(char *str);
 int		parsing_args(int ac, char **av);
@@ -41,6 +46,7 @@ int		check_pos_infos(char *line, int textures_collect,
 int		number_len(int nb);
 int		get_rgb(char *line, int rgb[3], int i, int j);
 int		get_textures(char *line, t_texture *texture, int *textures_collect);
+int		search_double(char *line, int fd);
 int		get_colors(char *line, int rgb[3], int *colors_collect);
 int		get_colors_textures(t_data *data, int textures_collect,
 			int colors_collect, int fd);

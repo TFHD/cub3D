@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 23:03:12 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/07 22:46:44 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:56:09 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ int	check_map(char **map, t_data *data)
 	if (i)
 		check_zero(&player_x, &player_y, map);
 	else if (find_player_location(&player_x, &player_y, data))
-		return (print_error(ERROR_MAP_NO_1_PLAYER, NULL));
+		return (print_error(ERROR_MAP_NO_1_PLAYER, NULL, TRUE));
 	if (check_wrong_chars(map))
-		return (print_error(ERROR_MAP_BAD_ELEMENTS, NULL));
+		return (print_error(ERROR_MAP_BAD_ELEMENTS, NULL, TRUE));
 	recursion_management_init(&rec_man);
 	ret = managed_flood_fill(player_x, player_y, map, &rec_man);
 	if (rec_man.error == 1)
-		return (print_error(ERROR_MAP_WALLS, NULL));
+		return (print_error(ERROR_MAP_WALLS, NULL, TRUE));
 	i++;
 	return (ret);
 }
