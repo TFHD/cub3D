@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:15:50 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 23:00:08 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/13 02:30:24 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,14 @@
 int	get_textures(char *line, t_texture *texture, int *textures_collect)
 {
 	int	fd;
+	int	i;
 
+	i = 2;
+	while (ft_iswhitespace(*(line + i)))
+		i++;
 	if (texture->texture_path != NULL)
 		return (print_error(ERROR_DUPLICATE_ELEMENTS, line, TRUE));
-	texture->texture_path = ft_substr(line, 3, ft_strlen(line) - 4);
+	texture->texture_path = ft_substr(line, i, ft_strlen(line) - i - 1);
 	fd = open(texture->texture_path, O_RDONLY);
 	if (fd == -1)
 		return (print_error(ERROR_OPEN, line, TRUE));
