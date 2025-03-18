@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:20:10 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/09 18:31:56 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/18 21:49:24 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,17 @@
 
 typedef enum s_mlx_key
 {
+	CUB_ESCAPE = 41,
 	CUB_UP = 26,
 	CUB_DOWN = 22,
 	CUB_RIGHT = 7,
 	CUB_LEFT = 4,
 	CUB_ARROW_LEFT = 80,
 	CUB_ARROW_RIGHT = 79,
+	CUB_ARROW_DOWN = 81,
+	CUB_ARROW_UP = 82,
+	CUB_RUN = 224,
+	CUB_NO_CLIP = 17
 }	t_mlx_key;
 
 typedef struct s_infos
@@ -43,10 +48,10 @@ typedef struct s_recursion_management
 {
 	unsigned int	i;
 	unsigned int	total_recursions;
-	char			max_stack_reached;
 	int				save_x;
 	int				save_y;
 	char			error;
+	char			max_stack_reached;
 }					t_recursion_management;
 
 typedef struct s_ray
@@ -88,6 +93,7 @@ typedef struct s_ray
 	int		tex_y;
 	double	step;
 	double	texpos;
+	int		pitch;
 }			t_ray;
 
 typedef struct s_texture
@@ -105,6 +111,36 @@ typedef struct s_window
 	mlx_window_create_info	info;
 }							t_window;
 
+typedef struct s_vec
+{
+	int	x;
+	int	y;
+}		t_vec;
+
+typedef struct s_vecf
+{
+	double	x;
+	double	y;
+}		t_vecf;
+
+typedef struct s_minimap
+{
+	t_vec		size;
+	t_vec		pos;
+}				t_minimap;
+
+
+typedef struct s_utils
+{
+	int	flash_light;
+	int	radius_light;
+	int	circle_x;
+	int	circle_y;
+	int	darkness;
+	int	pitch_min;
+	int	pitch_max;
+}		t_utils;
+
 typedef struct s_data
 {
 	mlx_context	mlx;
@@ -118,9 +154,17 @@ typedef struct s_data
 	t_texture	ea;
 	t_texture	we;
 	t_texture	so;
+	t_texture	test;
+	t_utils		utils;
+	int			flash_light;
 	mlx_color	*textures;
+	mlx_color	floor_colors;
+	mlx_color	sky_colors;
+	mlx_image	**imgs;
 	char		**map;
 	t_ray		ray;
+	t_minimap	minimap;
+	t_infos		infos;
 }				t_data;
 
 #endif

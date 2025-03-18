@@ -11,8 +11,10 @@ SRCS		:= 	main.c \
 				parsing/floodfill/floodfill_utils.c \
 				screen/mlx_manager.c \
 				screen/movements.c \
+				screen/minimap/minimap.c \
 				screen/events.c \
 				screen/utils/print_infos.c \
+				screen/torch/torch.c \
 				raycasting/infos/setters_1.c \
 				raycasting/infos/setters_2.c \
 				raycasting/raycasting.c \
@@ -24,7 +26,7 @@ OBJS		:=	$(patsubst %.c, $(DIR)%.o, $(SRCS))
 
 CC			:= cc
 
-FLAGS 		:= -Wall -Werror -Wextra -I ./includes -g
+FLAGS 		:= -Wall -Werror -Wextra -I ./includes -O3 -g
 
 LIB			:= libs/MacroLibX/libmlx.so libs/libft/libft.a
 

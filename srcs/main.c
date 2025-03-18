@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:01:59 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/09 18:44:31 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/18 09:23:44 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ void	init_data(t_data *data)
 	ft_memset(&data->we, 0, sizeof(t_texture));
 	ft_memset(&data->so, 0, sizeof(t_texture));
 	ft_memset(&data->no, 0, sizeof(t_texture));
+	ft_memset(&data->utils, 0, sizeof(t_utils));
+	ft_memset(&data->test, 0, sizeof(t_texture));
 	ft_memset(&data->win, 0, sizeof(t_window));
 	ft_memset(&data->ray, 0, sizeof(t_ray));
+	ft_memset(&data->minimap, 0, sizeof(t_minimap));
 	while (i < 3)
 	{
 		data->floor_color[i] = -1;
@@ -47,11 +50,12 @@ int	main(int ac, char **av)
 	if (parsing(ac, av, &data))
 		return (1);
 	set_fov(&infos, 0.90);
-	set_speed_mov(&infos, 7.0f);
-	set_speed_rot(&infos, 5.0f);
+	set_speed_mov(&infos, 4.0f);
+	set_speed_rot(&infos, 2.0f);
 	set_fps(&infos, 240);
-	set_width(&infos, 1920);
-	set_height(&infos, 1080);
+	set_width(&infos, 1540);
+	set_height(&infos, 900);
+	data.infos = infos;
 	init_mlx_core(&data, infos);
 	destroy_mlx_core(&data);
 	free_all_end(&data);

@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:47:44 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 03:03:19 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:27:03 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	update_pos(void *params);
 
 void	move_forward_back(t_data *data, t_ray *ray);
 void	move_left_right(t_data *data, t_ray *ray);
-void	turn_left(t_data *data, t_ray *ray);
-void	turn_right(t_data *data, t_ray *ray);
+void	turn_around(t_data *data, t_ray *ray, t_vec *mouse, t_vecf offset);
+void	speed_handler(t_data *data, t_ray *ray);
+double	get_fps(void);
 
 #endif

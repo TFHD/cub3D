@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 04:53:37 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 18:28:51 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/18 22:09:18 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	update_textures(t_data *data, t_ray *ray, int x)
 {
 	t_texture		*tex;
 	mlx_color		color;
+	int				index;
 
 	tex = get_texture(ray, data);
 	ray->tex_x = (int)(ray->wall_x * (double)tex->width);
@@ -78,8 +79,8 @@ void	update_textures(t_data *data, t_ray *ray, int x)
 		|| (ray->side == 1 && ray->raydir_y < 0))
 		ray->tex_x = tex->width - ray->tex_x - 1;
 	ray->step = 1.0 * tex->height / ray->lineheight;
-	ray->texpos = (ray->drawstart - (double)ray->height / 2
-			+ (double)ray->lineheight / 2) * ray->step;
+	ray->texpos = (ray->drawstart - ray->pitch - (double)ray->height * 0.5
+			+ (double)ray->lineheight * 0.5) * ray->step;
 	if ((ray->map_x >= 0 && ray->map_x < ft_str_arr_len(data->map))
 		&& (ray->map_y >= 0
 			&& ray->map_y < (int)ft_strlen(data->map[ray->map_x])))
@@ -89,8 +90,11 @@ void	update_textures(t_data *data, t_ray *ray, int x)
 			ray->tex_y = (int)ray->texpos;
 			ray->texpos += ray->step;
 			color = tex->colors[tex->width * ray->tex_y + ray->tex_x];
-			data->textures[data->ray.width
-				* ray->drawstart++ + x].rgba = color.rgba;
+			index = data->ray.width * ray->drawstart + x;
+			data->textures[index] = color;
+	//		if (data->utils.darkness)
+	//			torch_effect(data, ray, x, index);
+			ray->drawstart++;
 		}
 	}
 }
@@ -102,10 +106,10 @@ void	trace_line(t_ray *ray)
 	else
 		ray->perpwalldist = (ray->sidedist_y - ray->deltadist_y);
 	ray->lineheight = (int)(ray->height / ray->perpwalldist);
-	ray->drawstart = -ray->lineheight / 2 + ray->height / 2;
+	ray->drawstart = -ray->lineheight / 2 + ray->height * 0.5 + ray->pitch;
 	if (ray->drawstart < 0)
 		ray->drawstart = 0;
-	ray->drawend = ray->lineheight / 2 + ray->height / 2;
+	ray->drawend = ray->lineheight * 0.5 + ray->height * 0.5 + ray->pitch;
 	if (ray->drawend >= ray->height)
 		ray->drawend = ray->height - 1;
 	if (ray->side == 0)
