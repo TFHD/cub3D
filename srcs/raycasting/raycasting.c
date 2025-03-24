@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:08:42 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/18 22:07:12 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/24 01:34:37 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	raycaster(void *params)
 		x++;
 	}
 	create_minimap(data,
-		(t_vec){.x = 10, .y = 10},
+		(t_vec){.x = 10, .y = ray->width - 350},
 		(t_vec){.x = 300, .y = 300});
 	mlx_pixel_put_region(data->mlx, data->win.win, 0,
 		0, ray->width, ray->height, data->textures);

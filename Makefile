@@ -26,7 +26,7 @@ OBJS		:=	$(patsubst %.c, $(DIR)%.o, $(SRCS))
 
 CC			:= cc
 
-FLAGS 		:= -Wall -Werror -Wextra -I ./includes -O3 -g
+FLAGS 		:= -Wall -Werror -Wextra -I ./includes -g
 
 LIB			:= libs/MacroLibX/libmlx.so libs/libft/libft.a
 

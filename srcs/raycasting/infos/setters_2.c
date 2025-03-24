@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 00:58:53 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/18 16:22:11 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/24 01:35:34 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void	set_utils(t_utils *utils, t_infos infos)
 {
 	utils->radius_light = 300;
 	utils->darkness = 3;
-	utils->circle_x = infos.width / 2;
-	utils->circle_y = infos.height / 2;
+	utils->circle_x = infos.width * 0.5;
+	utils->circle_y = infos.height * 0.5;
 	utils->pitch_max = 1200;
 	utils->pitch_min = -1200;
 }

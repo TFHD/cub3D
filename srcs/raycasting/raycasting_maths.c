@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 04:53:37 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/18 22:09:18 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/21 10:17:01 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	update_textures(t_data *data, t_ray *ray, int x)
 			color = tex->colors[tex->width * ray->tex_y + ray->tex_x];
 			index = data->ray.width * ray->drawstart + x;
 			data->textures[index] = color;
-	//		if (data->utils.darkness)
-	//			torch_effect(data, ray, x, index);
+			if (data->utils.darkness)
+				torch_effect(data, ray, x, index);
 			ray->drawstart++;
 		}
 	}
