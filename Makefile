@@ -18,7 +18,8 @@ SRCS		:= 	main.c \
 				raycasting/infos/setters_1.c \
 				raycasting/infos/setters_2.c \
 				raycasting/raycasting.c \
-				raycasting/raycasting_maths.c
+				raycasting/raycasting_maths.c \
+				raycasting/raycasting_floor_sky.c
 
 DIR			:=	srcs/
 

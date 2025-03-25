@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:20:10 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/19 16:18:16 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:54:20 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ typedef struct s_data
 	t_texture	ea;
 	t_texture	we;
 	t_texture	so;
+	t_texture	floor;
+	t_texture	sky;
 	t_texture	test;
 	t_utils		utils;
 	int			flash_light;

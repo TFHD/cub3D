@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:10:14 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/18 17:39:16 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:19:19 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void		update_textures(t_data *data, t_ray *ray, int x);
 void		trace_line(t_ray *ray);
 t_texture	*get_texture(t_ray *ray, t_data *data);
 void		init_value_raycasting(t_ray *ray, int x);
+void		render_sky_floor(t_data *data, t_ray *ray);
+int			in_map(int x, int y, char **map);
 
 void		torch_effect(t_data *data, t_ray *ray, int x, int index);
 void		create_minimap(t_data *data, t_vec pos, t_vec size);

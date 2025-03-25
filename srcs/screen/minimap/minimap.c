@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 18:44:27 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/19 16:18:10 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:43:27 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void	create_minimap_squares(t_data *data, t_vec pos, t_vec size)
 	square_width = size.y / map_width;
 	square_height = size.x / map_height;
 	vec = (t_vec){0};
-	while (data->map[vec.x] && vec.x < map_height)
+	while (vec.x < map_height && data->map[vec.x])
 	{
-		while (data->map[vec.y] && vec.y < map_width)
+		while (vec.y < map_width && data->map[vec.x][vec.y])
 		{
 			draw_square(data, &pos, (int[2]){square_height, square_width}, data->map[vec.x][vec.y]);
 			draw_player(data, pos, vec, (int[2]){square_height, square_width});

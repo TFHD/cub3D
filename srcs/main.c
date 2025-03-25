@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:01:59 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/18 09:23:44 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 10:55:31 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	init_data(t_data *data)
 	ft_memset(&data->we, 0, sizeof(t_texture));
 	ft_memset(&data->so, 0, sizeof(t_texture));
 	ft_memset(&data->no, 0, sizeof(t_texture));
+	ft_memset(&data->sky, 0, sizeof(t_texture));
+	ft_memset(&data->floor, 0, sizeof(t_texture));
 	ft_memset(&data->utils, 0, sizeof(t_utils));
 	ft_memset(&data->test, 0, sizeof(t_texture));
 	ft_memset(&data->win, 0, sizeof(t_window));

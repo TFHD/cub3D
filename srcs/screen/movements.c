@@ -6,53 +6,87 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 02:42:58 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/19 16:18:12 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:30:51 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx_manager.h"
+#include "parsing.h"
 #include <math.h>
+
+int	in_map(int x, int y, char **map)
+{
+	if (x >= 0 && y >= 0 && x < ft_str_arr_len(map)
+		&& y < (int)ft_strlen(map[x]))
+		return (1);
+	return (0);
+}
+
+int	is_wall(int x, int y, char **map)
+{
+	if (map[x][y] == '1')
+		return (1);
+	return (0);
+}
 
 void	move_forward_back(t_data *data, t_ray *ray)
 {
+	double	new_pos_x;
+	double	new_pos_y;
+
+	new_pos_x = ray->dir_x * ray->movespeed;
+	new_pos_y = ray->dir_y * ray->movespeed;
 	if (data->keys[CUB_DOWN])
 	{
-		if (ray->pos_x < 0 || ray->pos_y < 0
-			|| data->map[(int)(ray->pos_x - ray->dir_x * ray->movespeed)][(int)ray->pos_y] != '1' || data->keys[CUB_NO_CLIP])
+		if (!in_map(ray->pos_x - new_pos_x, ray->pos_y, data->map)
+			|| !is_wall(ray->pos_x - new_pos_x, ray->pos_y, data->map)
+			|| data->keys[CUB_NO_CLIP])
 			ray->pos_x -= ray->dir_x * ray->movespeed;
-		if (ray->pos_x < 0 || ray->pos_y < 0
-			|| data->map[(int)ray->pos_x][(int)(ray->pos_y - ray->dir_y * ray->movespeed)] != '1' || data->keys[CUB_NO_CLIP])
+		if (!in_map(ray->pos_x, ray->pos_y - new_pos_y, data->map)
+			|| !is_wall(ray->pos_x, ray->pos_y - new_pos_y, data->map)
+			|| data->keys[CUB_NO_CLIP])
 			ray->pos_y -= ray->dir_y * ray->movespeed;
 	}
 	if (data->keys[CUB_UP])
 	{
-		if (ray->pos_x < 0 || ray->pos_y < 0
-			|| data->map[(int)(ray->pos_x + ray->dir_x * ray->movespeed)][(int)ray->pos_y] != '1' || data->keys[CUB_NO_CLIP])
+		if (!in_map(ray->pos_x + new_pos_x, ray->pos_y, data->map)
+			|| !is_wall(ray->pos_x + new_pos_x, ray->pos_y, data->map)
+			|| data->keys[CUB_NO_CLIP])
 			ray->pos_x += ray->dir_x * ray->movespeed;
-		if (ray->pos_x < 0 || ray->pos_y < 0
-			|| data->map[(int)ray->pos_x][(int)(ray->pos_y + ray->dir_y * ray->movespeed)] != '1' || data->keys[CUB_NO_CLIP])
+		if (!in_map(ray->pos_x, ray->pos_y + new_pos_y, data->map)
+			|| !is_wall(ray->pos_x, ray->pos_y + new_pos_y, data->map)
+			|| data->keys[CUB_NO_CLIP])
 			ray->pos_y += ray->dir_y * ray->movespeed;
 	}
 }
 
 void	move_left_right(t_data *data, t_ray *ray)
 {
+	double	new_pos_x;
+	double	new_pos_y;
+
+	new_pos_x = ray->dir_x * ray->movespeed;
+	new_pos_y = ray->dir_y * ray->movespeed;
 	if (data->keys[CUB_LEFT])
 	{
-		if (ray->pos_x < 0 || ray->pos_y < 0
-			|| data->map[(int)(ray->pos_x - ray->dir_y * ray->movespeed)][(int)ray->pos_y] != '1' || data->keys[CUB_NO_CLIP])
+		if (!in_map(ray->pos_x - new_pos_y, ray->pos_y, data->map)
+			|| !is_wall(ray->pos_x - new_pos_y, ray->pos_y, data->map)
+			|| data->keys[CUB_NO_CLIP])
 			ray->pos_x -= ray->dir_y * ray->movespeed;
-		if (ray->pos_x < 0 || ray->pos_y < 0
-			|| data->map[(int)ray->pos_x][(int)(ray->pos_y + ray->dir_x * ray->movespeed)] != '1' || data->keys[CUB_NO_CLIP])
-		ray->pos_y += ray->dir_x * ray->movespeed;
+		if (!in_map(ray->pos_x, ray->pos_y + new_pos_x, data->map)
+			|| !is_wall(ray->pos_x, ray->pos_y + new_pos_x, data->map)
+			|| data->keys[CUB_NO_CLIP])
+			ray->pos_y += ray->dir_x * ray->movespeed;
 	}
 	if (data->keys[CUB_RIGHT])
 	{
-		if (ray->pos_x < 0 || ray->pos_y < 0
-			|| data->map[(int)(ray->pos_x + ray->dir_y * ray->movespeed)][(int)ray->pos_y] != '1' || data->keys[CUB_NO_CLIP])
+		if (!in_map(ray->pos_x + new_pos_y, ray->pos_y, data->map)
+			|| !is_wall(ray->pos_x + new_pos_y, ray->pos_y, data->map)
+			|| data->keys[CUB_NO_CLIP])
 			ray->pos_x += ray->dir_y * ray->movespeed;
-		if (ray->pos_x < 0 || ray->pos_y < 0
-			|| data->map[(int)ray->pos_x][(int)(ray->pos_y - ray->dir_x * ray->movespeed)] != '1' || data->keys[CUB_NO_CLIP])
+		if (!in_map(ray->pos_x, ray->pos_y - new_pos_x, data->map)
+			|| !is_wall(ray->pos_x, ray->pos_y - new_pos_x, data->map)
+			|| data->keys[CUB_NO_CLIP])
 			ray->pos_y -= ray->dir_x * ray->movespeed;
 	}
 }

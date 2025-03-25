@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 00:58:53 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/24 01:35:34 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:02:57 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,10 @@ void	set_infos(t_data *data, t_infos infos)
 	load_image(data, &data->so);
 	load_image(data, &data->we);
 	load_image(data, &data->ea);
+	data->sky.texture_path = ft_strdup("./textures/planks_jungle.png");
+	data->floor.texture_path = ft_strdup("./textures/clay.png");
+	load_image(data, &data->sky);
+	load_image(data, &data->floor);
 }
 
 void	set_width(t_infos *infos, int width)

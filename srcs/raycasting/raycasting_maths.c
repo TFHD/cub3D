@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 04:53:37 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/21 10:17:01 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:01:00 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ void	send_ray(t_data *data, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if ((ray->map_x >= 0 && ray->map_x < ft_str_arr_len(data->map))
-			&& (ray->map_y >= 0
-				&& ray->map_y < (int)ft_strlen(data->map[ray->map_x])))
+		if (in_map(ray->map_x, ray->map_y, data->map))
 		{
 			if (data->map[ray->map_x][ray->map_y] == '1')
 				ray->hit = 1;
@@ -81,9 +79,7 @@ void	update_textures(t_data *data, t_ray *ray, int x)
 	ray->step = 1.0 * tex->height / ray->lineheight;
 	ray->texpos = (ray->drawstart - ray->pitch - (double)ray->height * 0.5
 			+ (double)ray->lineheight * 0.5) * ray->step;
-	if ((ray->map_x >= 0 && ray->map_x < ft_str_arr_len(data->map))
-		&& (ray->map_y >= 0
-			&& ray->map_y < (int)ft_strlen(data->map[ray->map_x])))
+	if (in_map(ray->map_x, ray->map_y, data->map))
 	{
 		while (ray->drawstart < ray->drawend)
 		{
@@ -92,8 +88,8 @@ void	update_textures(t_data *data, t_ray *ray, int x)
 			color = tex->colors[tex->width * ray->tex_y + ray->tex_x];
 			index = data->ray.width * ray->drawstart + x;
 			data->textures[index] = color;
-			if (data->utils.darkness)
-				torch_effect(data, ray, x, index);
+		//	if (data->utils.darkness)
+		//		torch_effect(data, ray, x, index);
 			ray->drawstart++;
 		}
 	}
