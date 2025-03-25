@@ -1,0 +1,6 @@
+[submodule "libs/MacroLibX"]
+	path = libs/MacroLibX
+	url = https://github.com/seekrs/MacroLibX
+[submodule "libs/libft"]
+	path = libs/libft
+	url = https://github.com/MykleR/libft.git
