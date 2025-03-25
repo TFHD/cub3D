@@ -6,11 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:21:14 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/18 18:55:10 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 18:09:47 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include <parsing.h>
 
 void	stock_map(t_data *data, char *line, int fd, int size)
 {

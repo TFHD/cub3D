@@ -6,11 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:15:50 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/13 02:30:24 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 18:31:42 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include <parsing.h>
 
 int	get_textures(char *line, t_texture *texture, int *textures_collect)
 {
@@ -18,7 +18,7 @@ int	get_textures(char *line, t_texture *texture, int *textures_collect)
 	int	i;
 
 	i = 2;
-	while (ft_iswhitespace(*(line + i)))
+	while (ft_isspace(*(line + i)))
 		i++;
 	if (texture->texture_path != NULL)
 		return (print_error(ERROR_DUPLICATE_ELEMENTS, line, TRUE));
@@ -36,18 +36,18 @@ int	get_rgb(char *line, int rgb[3], int i, int j)
 {
 	while (j < 3)
 	{
-		while (*(line + i) && (ft_iswhitespace(*(line + i))
+		while (*(line + i) && (ft_isspace(*(line + i))
 				|| (*(line + i) == '0' && *(line + i + 1) == '0')))
 			i++;
 		if (*(line + i) == '0' && ft_isdigit(*(line + i + 1)))
 			i++;
 		if (!ft_isdigit(*(line + i)))
 			return (1);
-		rgb[j] = ft_atoi(line + i, 0);
+		rgb[j] = ft_atoi(line + i);
 		if (rgb[j] > 255 || rgb[j] < 0)
 			return (1);
-		i += number_len(rgb[j]);
-		while (*(line + i) && ft_iswhitespace(*(line + i))
+		i += ft_nbdigits(rgb[j]);
+		while (*(line + i) && ft_isspace(*(line + i))
 			&& *(line + i) != ',')
 			i++;
 		if (*(line + i) != ',' && *(line + i) != 0)
@@ -77,7 +77,7 @@ void	search_content(char *line, int *error, int *content[2], t_data *data)
 	int	i;
 
 	i = 0;
-	while (ft_iswhitespace(*(line + i)))
+	while (ft_isspace(*(line + i)))
 		i++;
 	if (!ft_strncmp(line + i, "NO ", 3))
 		*error = get_textures(line + i, &data->no, content[0]);

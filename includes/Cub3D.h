@@ -6,14 +6,14 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:01:54 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/07 00:56:01 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:59:37 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "parsing.h"
-# include "mlx_manager.h"
+# include <parsing.h>
+# include <mlx_manager.h>
 
 #endif

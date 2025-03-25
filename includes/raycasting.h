@@ -6,15 +6,15 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:10:14 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/25 15:19:19 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:59:23 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAYCASTING_H
 # define RAYCASTING_H
 
-# include "structs.h"
-# include "parsing.h"
+# include <structs.h>
+# include <parsing.h>
 # include <math.h>
 # include <sys/time.h>
 

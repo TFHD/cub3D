@@ -1,7 +1,7 @@
 # Prerequisites
 *.d
 .cache/
-cub3d
+cub3D
 compile_commands.json
 
 # Object files

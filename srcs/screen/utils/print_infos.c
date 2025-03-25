@@ -6,29 +6,29 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 19:05:26 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/25 17:12:05 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 19:08:00 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx_manager.h"
-#include "structs.h"
+#include <mlx_manager.h>
+#include <structs.h>
 #include <sys/time.h>
 #include <unistd.h>
-#include "../../../libs/libft/includes/libft.h"
+#include <libft.h>
 
 void	print_coords(void *data_ptr)
 {
 	t_data	*data;
 	char	str_x[15];
 	char	str_y[15];
-	char	x[11];
-	char	y[11];
+	char	x[12];
+	char	y[12];
 
 	data = (t_data *)data_ptr;
 	ft_strcpy(str_x, "X : ");
 	ft_strcpy(str_y, "Y : ");
-	ft_itoa_buffer((int)data->ray.pos_x, x);
-	ft_itoa_buffer((int)data->ray.pos_y, y);
+	ft_itoa_buf((int)data->ray.pos_x, x);
+	ft_itoa_buf((int)data->ray.pos_y, y);
 	ft_strcat(str_x, x);
 	ft_strcat(str_y, y);
 	mlx_string_put(data->mlx, data->win.win, 5,
@@ -55,14 +55,14 @@ void	print_fps(t_data *data, double fps)
 	static struct timeval	val_cur;
 	static struct timeval	val_last;
 	char					str[17];
-	char					c_fps[11];
+	char					c_fps[12];
 
 	ft_strcpy(str, "FPS : ");
 	gettimeofday(&val_cur, 0);
 	frame++;
 	fps = (val_cur.tv_sec - val_last.tv_sec)
 		+ (val_cur.tv_usec - val_last.tv_usec) / 1000000.0;
-	ft_itoa_buffer(frame / fps, c_fps);
+	ft_itoa_buf(frame / fps, c_fps);
 	ft_strcat(str, c_fps);
 	mlx_set_font(data->mlx, "libs/font/Minecraft.ttf");
 	mlx_set_font_scale(data->mlx, "libs/font/Minecraft.ttf", 21.0);

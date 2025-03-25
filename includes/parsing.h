@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:02:06 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 22:41:20 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:58:49 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>
-# include "structs.h"
-# include "../libs/libft/includes/libft.h"
+# include <structs.h>
+# include <libft.h>
 
 # define ERROR "Error\n"
 # define ERROR_NUM_ARGS "\e[31mInvalid argument number !"

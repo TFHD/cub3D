@@ -6,14 +6,14 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:47:44 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/18 15:27:03 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:58:56 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MLX_MANAGER_H
 # define MLX_MANAGER_H
 
-# include "structs.h"
+# include <structs.h>
 # include <stdio.h>
 
 # define WIDTH 960

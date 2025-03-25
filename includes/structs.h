@@ -6,15 +6,15 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:20:10 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/25 16:54:20 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:59:10 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-# include "../libs/MacroLibX/includes/mlx.h"
-# include "../libs/MacroLibX/includes/mlx_extended.h"
+# include <mlx.h>
+# include <mlx_extended.h>
 
 # define WIDTH 960
 # define HEIGHT 540

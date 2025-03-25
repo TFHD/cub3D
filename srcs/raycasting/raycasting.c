@@ -6,12 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:08:42 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/25 17:05:55 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 19:17:11 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "raycasting.h"
-#include <sys/time.h>
+#include <raycasting.h>
 
 double	get_fps(void)
 {

@@ -6,11 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:12:41 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 18:55:52 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 18:11:22 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include <parsing.h>
 
 int	print_error(char *str, char *arg, int error)
 {
@@ -47,7 +47,7 @@ int	ft_strlen_whitespace(char *str)
 	caract = 0;
 	while (*(str + i))
 	{
-		if (!ft_iswhitespace(*(str + i)))
+		if (!ft_isspace(*(str + i)))
 			caract++;
 		i++;
 	}

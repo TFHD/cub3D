@@ -6,11 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 05:11:43 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 22:31:47 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/25 18:11:37 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include <parsing.h>
 
 int	free_textures(t_data *data, int textures_collect,
 					int colors_collect, int error)
@@ -40,7 +40,7 @@ int	search_double(char *line, int fd)
 
 	i = 0;
 	error = 0;
-	while (ft_iswhitespace(*(line + i)))
+	while (ft_isspace(*(line + i)))
 		i++;
 	if (!ft_strncmp(line + i, "NO ", 3))
 		error = error_wrong_line(fd);
