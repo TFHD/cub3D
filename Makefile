@@ -6,18 +6,18 @@
 #    By: mrouves <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/08 18:27:35 by mrouves           #+#    #+#              #
-#    Updated: 2025/04/01 20:32:50 by mrouves          ###   ########.fr        #
+#    Updated: 2025/04/01 20:56:41 by mrouves          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-include srcs/sources.mk
-include srcs/pretty_compile.mk
+include sources/sources.mk
+include sources/pretty_compile.mk
 
 NAME 			:= cub3D
 NAME_BONUS		:= cub3D_bonus
 
 DIR_HEADERS		:= includes
-DIR_SOURCES		:= srcs
+DIR_SOURCES		:= sources
 DIR_OBJS		:= .objs
 DIR_LIB			:= libs
 
@@ -61,11 +61,15 @@ $(DIR_OBJS)/%.o: $(DIR_SOURCES)/%.c
 
 clean:
 	@rm -rf $(DIR_OBJS)
+	@$(MAKE) -C $(DIR_LIBFT) clean --no-print-directory
+	@$(MAKE) -C $(DIR_MLX) clean --no-print-directory
 	@printf "Cleaned $(BOLD)$(DIR_OBJS)$(NO_COLOR)\n"
 
 fclean: clean
 	@rm -f $(NAME)
 	@rm -f $(NAME_BONUS)
+	@$(MAKE) -C $(DIR_LIBFT) fclean --no-print-directory
+	@$(MAKE) -C $(DIR_MLX) fclean --no-print-directory
 	@printf "Cleaned $(BOLD)$(NAME)/$(NAME_BONUS)$(NO_COLOR)\n"
 
 re: fclean all

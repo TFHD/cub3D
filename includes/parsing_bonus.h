@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   parsing_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:02:06 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 20:53:28 by mrouves          ###   ########.fr       */
+/*   Updated: 2025/04/01 20:53:53 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_BONUS_H
 # define PARSING_BONUS_H
 
-# include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>
-# include "structs.h"
-# include "libft.h"
+# include <structs_bonus.h>
+# include <libft.h>
 
 # define ERROR "Error\n"
 # define ERROR_NUM_ARGS "\e[31mInvalid argument number !"
@@ -32,6 +31,8 @@
 # define ERROR_MAP_NO_1_PLAYER "\e[31mNo or more than 1 player int he map !"
 # define ERROR_MAP_WALLS "\e[31mBad build walls int the map !"
 # define ERROR_MAP_BAD_ELEMENTS "\e[31mThere is bad elements in the map !"
+# define ERROR_MISSING_FILES "\e[31mThere are missing files !"
+# define ERROR_MALLOC "\e[31mMalloc Error !"
 
 # define TRUE 1
 # define FALSE 0
@@ -65,4 +66,6 @@ char	*go_to_map_line(t_data *data, int fd);
 int		ft_str_map_width(char **map);
 int		free_textures(t_data *data, int textures_collect,
 			int colors_collect, int error);
+int		is_wall(int x, int y, char **map);
+void	load_image(t_data *data, t_texture *tex);
 #endif

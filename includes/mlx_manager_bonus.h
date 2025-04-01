@@ -1,0 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_manager_bonus.h                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/02 16:47:44 by sabartho          #+#    #+#             */
+/*   Updated: 2025/04/01 20:53:34 by mrouves          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MLX_MANAGER_BONUS_H
+# define MLX_MANAGER_BONUS_H
+
+# include <structs_bonus.h>
+
+void	init_mlx_core(t_data *data, t_infos infos);
+void	destroy_mlx_core(t_data *data);
+
+void	raycaster(void *params);
+
+int		set_infos(t_data *data, t_infos infos);
+void	set_utils(t_utils *utils, t_infos infos);
+void	load_image(t_data *data, t_texture *tex);
+int		set_win_player_textures_infos(t_data *data, t_infos infos);
+int		set_sprites(t_data *data);
+
+void	key_release_event(int key, void *params);
+void	key_event(int key, void *params);
+void	event_manager(t_data *data);
+void	update_pos(void *params);
+int		check_files_are_here(void);
+
+void	move_forward_back(t_data *data, t_ray *ray);
+void	move_left_right(t_data *data, t_ray *ray);
+void	up(t_data *data, t_ray *ray, t_vecf *vec);
+void	down(t_data *data, t_ray *ray, t_vecf *vec);
+void	left(t_data *data, t_ray *ray, t_vecf *vec);
+void	right(t_data *data, t_ray *ray, t_vecf *vec);
+void	turn_around(t_data *data, t_ray *ray, t_vec *mouse, t_vecf offset);
+void	speed_handler(t_data *data, t_ray *ray);
+int		check_files_are_here(void);
+double	get_fps(void);
+
+#endif
