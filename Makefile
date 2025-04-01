@@ -1,77 +1,73 @@
-NAME		:= 	cub3D
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mrouves <marvin@42.fr>                     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/10/08 18:27:35 by mrouves           #+#    #+#              #
+#    Updated: 2025/04/01 20:32:50 by mrouves          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SRCS		:= 	main.c \
-				parsing/file/parsing.c \
-				parsing/file/parsing_color_textures.c \
-				parsing/file/parsing_color_textures_utils.c \
-				parsing/file/parsing_utils.c \
-				parsing/file/parsing_utils2.c \
-				parsing/floodfill/floodfill.c \
-				parsing/floodfill/parse_init.c \
-				parsing/floodfill/floodfill_utils.c \
-				screen/mlx_manager.c \
-				screen/movements.c \
-				screen/events.c \
-				screen/utils/print_infos.c \
-				raycasting/infos/setters_1.c \
-				raycasting/infos/setters_2.c \
-				raycasting/raycasting.c \
-				raycasting/raycasting_maths.c
+include srcs/sources.mk
+include srcs/pretty_compile.mk
 
-DIR			:=	srcs/
+NAME 			:= cub3D
+NAME_BONUS		:= cub3D_bonus
 
-OBJS		:=	$(patsubst %.c, $(DIR)%.o, $(SRCS))
+DIR_HEADERS		:= includes
+DIR_SOURCES		:= srcs
+DIR_OBJS		:= .objs
+DIR_LIB			:= libs
 
-CC			:= cc
+DIR_MLX			:= $(DIR_LIB)/MacroLibX
+MLX_INCLUDES	:= $(DIR_MLX)/includes
+MLX				:= $(DIR_MLX)/libmlx.so
 
-FLAGS 		:= -Wall -Werror -Wextra -I ./includes -g
+DIR_LIBFT		:= $(DIR_LIB)/libft
+LIBFT_INCLUDES	:= $(DIR_LIBFT)/headers
+LIBFT			:= $(DIR_LIBFT)/libft.a
 
-LIB			:= libs/MacroLibX/libmlx.so libs/libft/libft.a
+OBJS			:= $(addprefix $(DIR_OBJS)/, $(SOURCES:%.c=%.o))
+OBJS_BONUS		:= $(addprefix $(DIR_OBJS)/, $(SOURCES_BONUS:%.c=%.o))
 
-TPUT 					= tput -T xterm-256color
-_RESET 					:= $(shell $(TPUT) sgr0)
-_BOLD 					:= $(shell $(TPUT) bold)
-_ITALIC 				:= $(shell $(TPUT) sitm)
-_UNDER 					:= $(shell $(TPUT) smul)
-_GREEN 					:= $(shell $(TPUT) setaf 2)
-_YELLOW 				:= $(shell $(TPUT) setaf 3)
-_RED 					:= $(shell $(TPUT) setaf 1)
-_GRAY 					:= $(shell $(TPUT) setaf 8)
-_PURPLE 				:= $(shell $(TPUT) setaf 5)
+CC				:= clang
+CFLAGS			:= -Wall -Wextra -Werror
+IFLAGS			:= -I $(DIR_HEADERS) -I $(MLX_INCLUDES) -I $(LIBFT_INCLUDES)
+DIR_DUP			= mkdir -p $(@D)
 
-OBJS_TOTAL	= $(words $(OBJS))
-N_OBJS		:= $(shell find $(DIR) -type f -name $(OBJS) 2>/dev/null | wc -l)
-OBJS_TOTAL	:= $(shell echo $$(( $(OBJS_TOTAL) - $(N_OBJS) )))
-CURR_OBJ	= 0
+all: $(NAME) $(OBJS)
 
-all: ${NAME}
+bonus: $(NAME_BONUS) $(OBJS_BONUS)
 
-${NAME}: ${OBJS} ${LIB}
-	@${CC} ${FLAGS} -o ${NAME} ${OBJS} ${LIB} -lSDL2 -lm
+$(NAME): $(OBJS) $(MLX) $(LIBFT)
+	@$(call run_and_test, $(CC) $(CFLAGS) $(IFLAGS) $^ -o $@ -lm -lSDL2)
+	@printf "$(BOLD)$@$(NO_COLOR) compiled $(OK_COLOR)successfully$(NO_COLOR)\n"
 
-${LIB}:
-	@make --no-print-directory -C libs/MacroLibX -j16
-	@printf "$(_BOLD)$(_UNDER)$(_YELLOW)                            LIBFT                           $(_RESET)\n"
-	@make --no-print-directory -C libs/libft
-                                                                                                  
-${DIR}%.o: ${DIR}%.c
-	@${CC} ${FLAGS} -o $@ -c $<
-	@$(eval CURR_OBJ=$(shell echo $$(( $(CURR_OBJ) + 1 ))))
-	@$(eval PERCENT=$(shell echo $$(( $(CURR_OBJ) * 100 / $(OBJS_TOTAL) ))))
-	@printf "$(_GREEN)($(_BOLD)%3s%%$(_RESET)$(_GREEN)) $(_RESET)Compiling $(_BOLD)$(_PURPLE)$<$(_RESET)\n" "$(PERCENT)"
-	
+$(NAME_BONUS): $(OBJS_BONUS) $(MLX) $(LIBFT)
+	@$(call run_and_test, $(CC) $(CFLAGS) $(IFLAGS) $^ -o $@ -lm -lSDL2)
+	@printf "$(BOLD)$@$(NO_COLOR) compiled $(OK_COLOR)successfully$(NO_COLOR)\n"
+
+$(LIBFT):
+	@$(MAKE) -C $(DIR_LIBFT) --no-print-directory -j
+
+$(MLX):
+	@$(MAKE) -C $(DIR_MLX) --no-print-directory -j
+
+$(DIR_OBJS)/%.o: $(DIR_SOURCES)/%.c
+	@$(DIR_DUP)
+	@$(call run_and_test,$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@)
+
 clean:
-	@rm -rf ${OBJS}
-	@make --no-print-directory -C libs/libft clean
-	@make --no-print-directory -C libs/MacroLibX clean
-	@printf "\n$(_BOLD)All objects are $(_GREEN)cleaned $(_RESET)! 🎉\n\n"
+	@rm -rf $(DIR_OBJS)
+	@printf "Cleaned $(BOLD)$(DIR_OBJS)$(NO_COLOR)\n"
 
 fclean: clean
-	@rm -f ${NAME}
-	@make --no-print-directory -C libs/libft fclean
-	@make --no-print-directory -C libs/MacroLibX fclean
-	@printf "Cleaned $(_BOLD)$(NAME)$(_RESET) !\n\n"
+	@rm -f $(NAME)
+	@rm -f $(NAME_BONUS)
+	@printf "Cleaned $(BOLD)$(NAME)/$(NAME_BONUS)$(NO_COLOR)\n"
 
 re: fclean all
 
-.PHONY: clean fclean re all
+.PHONY: clean fclean bonus re all
