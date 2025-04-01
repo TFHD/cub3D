@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 00:54:05 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 18:13:59 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:51:45 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	set_utils(t_utils *utils, t_infos infos)
 	utils->flash_light = 0;
 }
 
-void	set_sprite(t_data *data, t_vecf pos, char *file, char *file2)
+int	set_sprite(t_data *data, t_vecf pos, char *file, char *file2)
 {
 	static int	i;
 
@@ -59,10 +59,16 @@ void	set_sprite(t_data *data, t_vecf pos, char *file, char *file2)
 	data->sprites[i].tex[1].texture_path = file2;
 	load_image(data, &data->sprites[i].tex[0]);
 	load_image(data, &data->sprites[i].tex[1]);
+	if (!data->sprites[i].tex[0].img || !data->sprites[i].tex[1].img)
+	{
+		data->error = 2;
+		return (1);
+	}
 	i++;
+	return (0);
 }
 
-void	set_win_player_textures_infos(t_data *data, t_infos infos)
+int	set_win_player_textures_infos(t_data *data, t_infos infos)
 {
 	data->win.info.title = "cub3D";
 	data->win.info.width = infos.width;
@@ -80,15 +86,18 @@ void	set_win_player_textures_infos(t_data *data, t_infos infos)
 	data->ray.height = infos.height;
 	data->ray.zbuffer = malloc(sizeof(double) * infos.width);
 	data->textures = malloc(sizeof(mlx_color) * infos.width * infos.height);
+	if (!data->textures || !data->ray.zbuffer)
+		return (1);
 	data->test.texture_path = ft_strdup("./textures/lamptorch.png");
 	data->sky_colors.rgba = data->sky_color[0] << 24 | data->sky_color[1] << 16
 		| data->sky_color[2] << 8 | 0xFF;
 	data->floor_colors.rgba = data->floor_color[0] << 24
 		| data->floor_color[1] << 16 | data->floor_color[2] << 8 | 0xFF;
 	data->imgs_nb = 0;
+	return (0);
 }
 
-void	set_sprites(t_data *data)
+int	set_sprites(t_data *data)
 {
 	char	*tex;
 	char	*tex2;
@@ -96,6 +105,8 @@ void	set_sprites(t_data *data)
 
 	i = -1;
 	data->sprites = malloc(sizeof(t_sprite) * NB_SPRITES);
+	if (!data->sprites)
+		return (1);
 	tex = ft_strdup("./textures/lebron.jpg");
 	tex2 = ft_strdup("./textures/lebron1.png");
 	set_sprite(data, (t_vecf){2, 21}, tex, tex2);
@@ -104,4 +115,5 @@ void	set_sprites(t_data *data)
 	free(tex2);
 	while (++i < NB_SPRITES)
 		data->sprite_ord[i] = i;
+	return (0);
 }

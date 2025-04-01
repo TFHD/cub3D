@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:20:10 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 16:45:44 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:35:09 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ typedef struct s_data
 	mlx_color	sky_colors;
 	mlx_image	*imgs[1024];
 	int			imgs_nb;
+	int			error;
 	char		**map;
 	t_ray		ray;
 	t_minimap	minimap;

@@ -6,14 +6,14 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:21:14 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 17:43:13 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:56:51 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "Cub3D.h"
 
-void	stock_map(t_data *data, char *line, int fd, int size)
+int	stock_map(t_data *data, char *line, int fd, int size)
 {
 	int	x;
 	int	y;
@@ -24,6 +24,8 @@ void	stock_map(t_data *data, char *line, int fd, int size)
 	while (line && x != size)
 	{
 		data->map[x] = malloc(ft_strlen(line));
+		if (!data->map || !data->map[x])
+			return (1);
 		while (*(line + y + 1))
 		{
 			data->map[x][y] = *(line + y);
@@ -37,6 +39,7 @@ void	stock_map(t_data *data, char *line, int fd, int size)
 	}
 	data->map[x] = 0;
 	close(fd);
+	return (0);
 }
 
 int	get_map_size(t_data *data, int fd, int *size)
@@ -78,7 +81,8 @@ int	parse_map(t_data *data, int fd, char *file)
 	if (fd == -1)
 		return (print_error(ERROR_OPEN, file, TRUE));
 	line = go_to_map_line(data, fd);
-	stock_map(data, line, fd, size);
+	if (stock_map(data, line, fd, size))
+		return (print_error(ERROR_MALLOC, NULL, TRUE));
 	return (0);
 }
 

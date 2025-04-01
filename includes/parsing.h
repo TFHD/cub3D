@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:02:06 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 17:35:20 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:58:06 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define ERROR_MAP_WALLS "\e[31mBad build walls int the map !"
 # define ERROR_MAP_BAD_ELEMENTS "\e[31mThere is bad elements in the map !"
 # define ERROR_MISSING_FILES "\e[31mThere are missing files !"
+# define ERROR_MALLOC "\e[31mMalloc Error !"
 
 # define TRUE 1
 # define FALSE 0

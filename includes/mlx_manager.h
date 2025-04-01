@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:47:44 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 17:59:01 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:51:55 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	destroy_mlx_core(t_data *data);
 
 void	raycaster(void *params);
 
-void	set_infos(t_data *data, t_infos infos);
+int		set_infos(t_data *data, t_infos infos);
 void	set_utils(t_utils *utils, t_infos infos);
 void	load_image(t_data *data, t_texture *tex);
-void	set_win_player_textures_infos(t_data *data, t_infos infos);
-void	set_sprites(t_data *data);
+int		set_win_player_textures_infos(t_data *data, t_infos infos);
+int		set_sprites(t_data *data);
 
 void	key_release_event(int key, void *params);
 void	key_event(int key, void *params);
