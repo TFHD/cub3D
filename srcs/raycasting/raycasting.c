@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:08:42 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 18:29:26 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 20:02:33 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	clear_window(t_data *data, t_ray *ray)
 		| data->sky_color[2] << 8 | 0xFF;
 	floor_color = data->floor_color[0] << 24 | data->floor_color[1] << 16
 		| data->floor_color[2] << 8 | 0xFF;
-	while (i < ray->width * ray->height / 2)
+	while (i < (ray->width * ray->height >> 1))
 	{
 		data->textures[i].rgba = sky_color;
 		data->textures[i++ + ray->width * ray->height / 2].rgba = floor_color;

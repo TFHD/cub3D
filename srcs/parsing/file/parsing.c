@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:21:14 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 23:04:11 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:58:20 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ void	stock_map(t_data *data, char *line, int fd, int size)
 	x = 0;
 	y = 0;
 	data->map = malloc(sizeof(char *) * (size + 1));
-	while (line && x != size)
+	while (data->map && line && x != size)
 	{
 		data->map[x] = malloc(ft_strlen(line));
+		if (!data->map[x])
+			break ;
 		while (*(line + y + 1))
 		{
 			data->map[x][y] = *(line + y);
@@ -34,7 +36,8 @@ void	stock_map(t_data *data, char *line, int fd, int size)
 		free(line);
 		line = get_next_line(fd);
 	}
-	data->map[x] = 0;
+	if (data->map)
+		data->map[x] = 0;
 	close(fd);
 }
 

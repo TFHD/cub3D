@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 04:53:37 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 18:28:51 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:56:28 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void	update_textures(t_data *data, t_ray *ray, int x)
 	if ((ray->side == 0 && ray->raydir_x > 0)
 		|| (ray->side == 1 && ray->raydir_y < 0))
 		ray->tex_x = tex->width - ray->tex_x - 1;
-	ray->step = 1.0 * tex->height / ray->lineheight;
-	ray->texpos = (ray->drawstart - (double)ray->height / 2
-			+ (double)ray->lineheight / 2) * ray->step;
+	ray->step = (double)tex->height / ray->lineheight;
+	ray->texpos = (ray->drawstart - (double)(ray->height >> 1)
+			+ (double)(ray->lineheight >> 1)) * ray->step;
 	if ((ray->map_x >= 0 && ray->map_x < ft_str_arr_len(data->map))
 		&& (ray->map_y >= 0
 			&& ray->map_y < (int)ft_strlen(data->map[ray->map_x])))
@@ -102,10 +102,10 @@ void	trace_line(t_ray *ray)
 	else
 		ray->perpwalldist = (ray->sidedist_y - ray->deltadist_y);
 	ray->lineheight = (int)(ray->height / ray->perpwalldist);
-	ray->drawstart = -ray->lineheight / 2 + ray->height / 2;
+	ray->drawstart = -(ray->lineheight >> 1) + (ray->height >> 1);
 	if (ray->drawstart < 0)
 		ray->drawstart = 0;
-	ray->drawend = ray->lineheight / 2 + ray->height / 2;
+	ray->drawend = (ray->lineheight >> 1) + (ray->height >> 1);
 	if (ray->drawend >= ray->height)
 		ray->drawend = ray->height - 1;
 	if (ray->side == 0)
@@ -117,7 +117,7 @@ void	trace_line(t_ray *ray)
 
 void	init_value_raycasting(t_ray *ray, int x)
 {
-	ray->camera_x = 2 * x / (double)ray->width - 1;
+	ray->camera_x = (x << 1) / (double)ray->width - 1;
 	ray->raydir_x = ray->dir_x + ray->plane_x * ray->camera_x;
 	ray->raydir_y = ray->dir_y + ray->plane_y * ray->camera_x;
 	ray->map_x = (int)floor(ray->pos_x);

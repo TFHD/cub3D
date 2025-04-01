@@ -6,31 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:01:59 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 19:11:12 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 20:05:59 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cub3D.h"
-
-void	init_data(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	data->line_read = 0;
-	ft_memset(&data->ea, 0, sizeof(t_texture));
-	ft_memset(&data->we, 0, sizeof(t_texture));
-	ft_memset(&data->so, 0, sizeof(t_texture));
-	ft_memset(&data->no, 0, sizeof(t_texture));
-	ft_memset(&data->win, 0, sizeof(t_window));
-	ft_memset(&data->ray, 0, sizeof(t_ray));
-	while (i < 3)
-	{
-		data->floor_color[i] = -1;
-		data->sky_color[i++] = -1;
-	}
-	ft_memset(&data->keys, 0, sizeof(data->keys));
-}
 
 void	free_all_end(t_data *data)
 {
@@ -40,10 +20,9 @@ void	free_all_end(t_data *data)
 
 int	main(int ac, char **av)
 {
-	t_data	data;
-	t_infos	infos;
+	static t_data	data = {0, .floor_color = {-1}, .sky_color = {-1}};
+	static t_infos	infos = {0};
 
-	init_data(&data);
 	if (parsing(ac, av, &data))
 		return (1);
 	set_fov(&infos, 0.90);
