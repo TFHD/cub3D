@@ -6,14 +6,13 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:02:06 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/25 17:58:49 by mrouves          ###   ########.fr       */
+/*   Updated: 2025/03/31 19:13:04 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-# include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <structs.h>
@@ -65,4 +64,6 @@ char	*go_to_map_line(t_data *data, int fd);
 int		ft_str_map_width(char **map);
 int		free_textures(t_data *data, int textures_collect,
 			int colors_collect, int error);
+int		is_wall(int x, int y, char **map);
+void	load_image(t_data *data, t_texture *tex);
 #endif

@@ -6,15 +6,12 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 19:05:26 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/25 19:08:00 by mrouves          ###   ########.fr       */
+/*   Updated: 2025/03/31 22:28:42 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx_manager.h>
-#include <structs.h>
 #include <sys/time.h>
-#include <unistd.h>
-#include <libft.h>
+#include "Cub3D.h"
 
 void	print_coords(void *data_ptr)
 {
@@ -27,26 +24,14 @@ void	print_coords(void *data_ptr)
 	data = (t_data *)data_ptr;
 	ft_strcpy(str_x, "X : ");
 	ft_strcpy(str_y, "Y : ");
-	ft_itoa_buf((int)data->ray.pos_x, x);
-	ft_itoa_buf((int)data->ray.pos_y, y);
+	ft_itoa_buf((int)data->ray.pos.x, x);
+	ft_itoa_buf((int)data->ray.pos.y, y);
 	ft_strcat(str_x, x);
 	ft_strcat(str_y, y);
 	mlx_string_put(data->mlx, data->win.win, 5,
 		50, (mlx_color){.rgba = 0xFFFFFFFF}, str_x);
 	mlx_string_put(data->mlx, data->win.win, 5,
 		70, (mlx_color){.rgba = 0xFFFFFFFF}, str_y);
-}
-
-void	print_windows_size(void *params)
-{
-	int		w;
-	int		h;
-	t_data	*data;
-
-	data = (t_data *)params;
-	mlx_get_window_size(data->mlx, data->win.win, &w, &h);
-	printf("WIDTH : %d\n", w);
-	printf("HEIGHT : %d\n", h);
 }
 
 void	print_fps(t_data *data, double fps)
@@ -61,7 +46,7 @@ void	print_fps(t_data *data, double fps)
 	gettimeofday(&val_cur, 0);
 	frame++;
 	fps = (val_cur.tv_sec - val_last.tv_sec)
-		+ (val_cur.tv_usec - val_last.tv_usec) / 1000000.0;
+		+ (val_cur.tv_usec - val_last.tv_usec) * 0.000001;
 	ft_itoa_buf(frame / fps, c_fps);
 	ft_strcat(str, c_fps);
 	mlx_set_font(data->mlx, "libs/font/Minecraft.ttf");
@@ -70,4 +55,19 @@ void	print_fps(t_data *data, double fps)
 		20, (mlx_color){.rgba = 0xFFFFFFFF}, str);
 	frame = 0;
 	val_last = val_cur;
+}
+
+int	in_map(int x, int y, char **map)
+{
+	if (x >= 0 && y >= 0 && x < ft_str_arr_len(map)
+		&& y < (int)ft_strlen(map[x]))
+		return (1);
+	return (0);
+}
+
+int	is_wall(int x, int y, char **map)
+{
+	if (map[x][y] == '1' || map[x][y] == '2')
+		return (1);
+	return (0);
 }

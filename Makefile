@@ -6,7 +6,7 @@
 #    By: mrouves <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/08 18:27:35 by mrouves           #+#    #+#              #
-#    Updated: 2025/03/25 18:07:52 by mrouves          ###   ########.fr        #
+#    Updated: 2025/03/31 23:13:00 by sabartho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,8 @@ LIBFT			:= $(DIR_LIBFT)/libft.a
 
 OBJS			:= $(addprefix $(DIR_OBJS)/, $(SOURCES:%.c=%.o))
 
-CC				:= clang
-CFLAGS			:= -Wall -Wextra -Werror
+CC				:= cc
+CFLAGS			:= -Wall -Wextra -Werror -g
 IFLAGS			:= -I $(DIR_HEADERS) -I $(MLX_INCLUDES) -I $(LIBFT_INCLUDES)
 DIR_DUP			= mkdir -p $(@D)
 

@@ -6,35 +6,33 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 04:53:37 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/25 17:01:00 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:42:41 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "raycasting.h"
-#include "structs.h"
+#include "Cub3D.h"
 
 void	dda(t_ray *ray)
 {
-	if (ray->raydir_x < 0)
+	if (ray->raydir.x < 0)
 	{
-		ray->step_x = -1;
-		ray->sidedist_x = (ray->pos_x - ray->map_x) * ray->deltadist_x;
+		ray->steps.x = -1;
+		ray->sidedist.x = (ray->pos.x - ray->map.x) * ray->deltadist.x;
 	}
 	else
 	{
-		ray->step_x = 1;
-		ray->sidedist_x = (ray->map_x + 1.0 - ray->pos_x) * ray->deltadist_x;
+		ray->steps.x = 1;
+		ray->sidedist.x = (ray->map.x + 1.0 - ray->pos.x) * ray->deltadist.x;
 	}
-	if (ray->raydir_y < 0)
+	if (ray->raydir.y < 0)
 	{
-		ray->step_y = -1;
-		ray->sidedist_y = (ray->pos_y - ray->map_y) * ray->deltadist_y;
+		ray->steps.y = -1;
+		ray->sidedist.y = (ray->pos.y - ray->map.y) * ray->deltadist.y;
 	}
 	else
 	{
-		ray->step_y = 1;
-		ray->sidedist_y = (ray->map_y + 1.0 - ray->pos_y) * ray->deltadist_y;
+		ray->steps.y = 1;
+		ray->sidedist.y = (ray->map.y + 1.0 - ray->pos.y) * ray->deltadist.y;
 	}
 }
 
@@ -42,25 +40,26 @@ void	send_ray(t_data *data, t_ray *ray)
 {
 	while (ray->hit == 0)
 	{
-		if (ray->sidedist_x < ray->sidedist_y)
+		if (ray->sidedist.x < ray->sidedist.y)
 		{
-			ray->sidedist_x += ray->deltadist_x;
-			ray->map_x += ray->step_x;
+			ray->sidedist.x += ray->deltadist.x;
+			ray->map.x += ray->steps.x;
 			ray->side = 0;
 		}
 		else
 		{
-			ray->sidedist_y += ray->deltadist_y;
-			ray->map_y += ray->step_y;
+			ray->sidedist.y += ray->deltadist.y;
+			ray->map.y += ray->steps.y;
 			ray->side = 1;
 		}
-		if (in_map(ray->map_x, ray->map_y, data->map))
+		if (in_map(ray->map.x, ray->map.y, data->map))
 		{
-			if (data->map[ray->map_x][ray->map_y] == '1')
+			door_handler_ray(data->map, ray);
+			if (is_wall(ray->map.x, ray->map.y, data->map))
 				ray->hit = 1;
 		}
-		else if (fabs(ray->map_x - ray->pos_x) > 50
-			|| fabs(ray->map_y - ray->pos_y) > 50)
+		else if (fabs(ray->map.x - ray->pos.x) > 50
+			|| fabs(ray->map.y - ray->pos.y) > 50)
 			ray->hit = 1;
 	}
 }
@@ -72,57 +71,55 @@ void	update_textures(t_data *data, t_ray *ray, int x)
 	int				index;
 
 	tex = get_texture(ray, data);
-	ray->tex_x = (int)(ray->wall_x * (double)tex->width);
-	if ((ray->side == 0 && ray->raydir_x > 0)
-		|| (ray->side == 1 && ray->raydir_y < 0))
-		ray->tex_x = tex->width - ray->tex_x - 1;
+	ray->tex.x = (int)(ray->wall_x * (double)tex->width);
+	if ((ray->side == 0 && ray->raydir.x > 0)
+		|| (ray->side == 1 && ray->raydir.y < 0))
+		ray->tex.x = tex->width - ray->tex.x - 1;
 	ray->step = 1.0 * tex->height / ray->lineheight;
-	ray->texpos = (ray->drawstart - ray->pitch - (double)ray->height * 0.5
+	ray->texpos = (ray->drawstart - ray->pitch - data->utils.mid_height
 			+ (double)ray->lineheight * 0.5) * ray->step;
-	if (in_map(ray->map_x, ray->map_y, data->map))
+	if (in_map(ray->map.x, ray->map.y, data->map))
 	{
 		while (ray->drawstart < ray->drawend)
 		{
-			ray->tex_y = (int)ray->texpos;
+			ray->tex.y = (int)ray->texpos;
 			ray->texpos += ray->step;
-			color = tex->colors[tex->width * ray->tex_y + ray->tex_x];
+			color = tex->colors[tex->width * ray->tex.y + ray->tex.x];
 			index = data->ray.width * ray->drawstart + x;
 			data->textures[index] = color;
-		//	if (data->utils.darkness)
-		//		torch_effect(data, ray, x, index);
 			ray->drawstart++;
 		}
 	}
 }
 
-void	trace_line(t_ray *ray)
+void	trace_line(t_data *data, t_ray *ray)
 {
 	if (ray->side == 0)
-		ray->perpwalldist = (ray->sidedist_x - ray->deltadist_x);
+		ray->perpwalldist = (ray->sidedist.x - ray->deltadist.x);
 	else
-		ray->perpwalldist = (ray->sidedist_y - ray->deltadist_y);
+		ray->perpwalldist = (ray->sidedist.y - ray->deltadist.y);
 	ray->lineheight = (int)(ray->height / ray->perpwalldist);
-	ray->drawstart = -ray->lineheight / 2 + ray->height * 0.5 + ray->pitch;
+	ray->drawstart = -ray->lineheight / 2 + data->utils.mid_height + ray->pitch;
 	if (ray->drawstart < 0)
 		ray->drawstart = 0;
-	ray->drawend = ray->lineheight * 0.5 + ray->height * 0.5 + ray->pitch;
+	ray->drawend = ray->lineheight * 0.5 + data->utils.mid_height + ray->pitch;
 	if (ray->drawend >= ray->height)
 		ray->drawend = ray->height - 1;
 	if (ray->side == 0)
-		ray->wall_x = ray->pos_y + ray->perpwalldist * ray->raydir_y;
+		ray->wall_x = ray->pos.y + ray->perpwalldist * ray->raydir.y;
 	else
-		ray->wall_x = ray->pos_x + ray->perpwalldist * ray->raydir_x;
+		ray->wall_x = ray->pos.x + ray->perpwalldist * ray->raydir.x;
 	ray->wall_x -= floor(ray->wall_x);
 }
 
 void	init_value_raycasting(t_ray *ray, int x)
 {
 	ray->camera_x = 2 * x / (double)ray->width - 1;
-	ray->raydir_x = ray->dir_x + ray->plane_x * ray->camera_x;
-	ray->raydir_y = ray->dir_y + ray->plane_y * ray->camera_x;
-	ray->map_x = (int)floor(ray->pos_x);
-	ray->map_y = (int)floor(ray->pos_y);
-	ray->deltadist_x = fabs(1 / ray->raydir_x);
-	ray->deltadist_y = fabs(1 / ray->raydir_y);
+	ray->raydir.x = ray->dir.x + ray->plane.x * ray->camera_x;
+	ray->raydir.y = ray->dir.y + ray->plane.y * ray->camera_x;
+	ray->map.x = (int)floor(ray->pos.x);
+	ray->map.y = (int)floor(ray->pos.y);
+	ray->deltadist.x = fabs(1 / ray->raydir.x);
+	ray->deltadist.y = fabs(1 / ray->raydir.y);
 	ray->hit = 0;
 }

@@ -6,11 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 17:10:52 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/19 15:15:23 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:26:19 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "raycasting.h"
+#include "Cub3D.h"
 
 float	is_in_circle(int x, int y, t_utils utils)
 {
@@ -41,14 +41,14 @@ void	torch_effect(t_data *data, t_ray *ray, int x, int index)
 	tmp = res;
 	res = 1 / res;
 	if (ray->perpwalldist > 1.0 / data->utils.darkness
-		&& (!data->flash_light || !circle))
+		&& (!data->utils.flash_light || !circle))
 	{
 		darkness = 1 / (ray->perpwalldist * data->utils.darkness);
 		data->textures[index].r *= darkness;
 		data->textures[index].g *= darkness;
 		data->textures[index].b *= darkness;
 	}
-	else if (data->flash_light && circle
+	else if (data->utils.flash_light && circle
 		&& ray->perpwalldist > 1.0 / data->utils.darkness)
 	{
 		data->textures[index].r *= res * (tmp >= 1) + (tmp < 1);

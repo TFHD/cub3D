@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:20:10 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/25 17:59:10 by mrouves          ###   ########.fr       */
+/*   Updated: 2025/04/01 14:33:48 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,19 @@
 # include <mlx.h>
 # include <mlx_extended.h>
 
-# define WIDTH 960
-# define HEIGHT 540
+# define NB_SPRITES 2
+
+typedef struct s_vec
+{
+	int	x;
+	int	y;
+}		t_vec;
+
+typedef struct s_vecf
+{
+	double	x;
+	double	y;
+}			t_vecf;
 
 typedef enum s_mlx_key
 {
@@ -56,25 +67,19 @@ typedef struct s_recursion_management
 
 typedef struct s_ray
 {
-	double	pos_x;
-	double	pos_y;
-	double	dir_x;
-	double	dir_y;
-	double	plane_x;
-	double	plane_y;
+	t_vecf	pos;
+	t_vecf	dir;
+	t_vecf	raydir;
+	t_vec	map;
+	t_vecf	sidedist;
+	t_vecf	deltadist;
+	t_vec	steps;
+	t_vec	tex;
+	t_vec	door_open;
+	t_vecf	plane;
 	double	camera_x;
-	double	raydir_x;
-	double	raydir_y;
-	int		map_x;
-	int		map_y;
 	int		color;
-	double	sidedist_x;
-	double	sidedist_y;
-	double	deltadist_x;
-	double	deltadist_y;
 	double	perpwalldist;
-	int		step_x;
-	int		step_y;
 	int		hit;
 	int		side;
 	int		lineheight;
@@ -89,11 +94,11 @@ typedef struct s_ray
 	int		height;
 	int		width;
 	double	wall_x;
-	int		tex_x;
-	int		tex_y;
 	double	step;
 	double	texpos;
 	int		pitch;
+	int		touch_door_open;
+	double	*zbuffer;
 }			t_ray;
 
 typedef struct s_texture
@@ -111,35 +116,50 @@ typedef struct s_window
 	mlx_window_create_info	info;
 }							t_window;
 
-typedef struct s_vec
-{
-	int	x;
-	int	y;
-}		t_vec;
-
-typedef struct s_vecf
-{
-	double	x;
-	double	y;
-}		t_vecf;
-
 typedef struct s_minimap
 {
 	t_vec		size;
 	t_vec		pos;
 }				t_minimap;
 
+typedef struct s_sp_draw
+{
+	t_vecf	sprite;
+	t_vecf	transform;
+	t_vec	sprite_size;
+	t_vec	sprite_screen;
+	t_vec	draw_x;
+	t_vec	draw_y;
+	t_vec	tex;
+}			t_sp_draw;
+
+typedef struct s_skyfloor_draw
+{
+	t_vecf		floor;
+	t_vecf		floor_step;
+	t_vec		cell;
+	t_vec		tex;
+	t_vec		index;
+}	t_skyfloor_draw;
 
 typedef struct s_utils
 {
-	int	flash_light;
-	int	radius_light;
-	int	circle_x;
-	int	circle_y;
-	int	darkness;
-	int	pitch_min;
-	int	pitch_max;
-}		t_utils;
+	int		flash_light;
+	int		radius_light;
+	int		circle_x;
+	int		circle_y;
+	int		darkness;
+	int		pitch_min;
+	int		pitch_max;
+	double	mid_height;
+	double	mid_width;
+}			t_utils;
+
+typedef struct s_sprite
+{
+	t_vecf		pos;
+	t_texture	tex;
+}				t_sprite;
 
 typedef struct s_data
 {
@@ -157,16 +177,27 @@ typedef struct s_data
 	t_texture	floor;
 	t_texture	sky;
 	t_texture	test;
+	t_texture	door;
+	t_sprite	*sprites;
+	int			sprite_ord[NB_SPRITES];
 	t_utils		utils;
-	int			flash_light;
 	mlx_color	*textures;
 	mlx_color	floor_colors;
 	mlx_color	sky_colors;
-	mlx_image	**imgs;
+	mlx_image	*imgs[1024];
+	int			imgs_nb;
 	char		**map;
 	t_ray		ray;
 	t_minimap	minimap;
 	t_infos		infos;
 }				t_data;
+
+typedef struct s_thread_data
+{
+	t_data		data;
+	t_ray		ray;
+	int			start_x;
+	int			end_x;
+}	t_thread_data;
 
 #endif

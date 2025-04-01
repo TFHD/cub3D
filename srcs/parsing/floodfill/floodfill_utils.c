@@ -6,11 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 18:42:14 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 18:46:54 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:43:47 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "Cub3D.h"
 
 int	ft_str_arr_len(char **arr)
 {
@@ -78,7 +78,7 @@ int	check_wrong_chars(char **map)
 			if (map[i][j] != 'N' && map[i][j] != 'S'
 				&& map[i][j] != 'W' && map[i][j] != 'E'
 				&& map[i][j] != '1' && map[i][j] != '0'
-				&& ft_isspace(map[i][j]) == 0)
+				&& map[i][j] != '2' && ft_isspace(map[i][j]) == 0)
 				return (-1);
 			j++;
 		}

@@ -6,11 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 23:03:12 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 18:56:09 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:42:02 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "Cub3D.h"
 
 static int	recursion_management(t_recursion_management *rec_man,
 								int *x, int *y, char **map)
@@ -45,7 +45,7 @@ static int	flood_fill(int x, int y, char **map,
 		rec_man->error = 1;
 		return (1);
 	}
-	else if (map[y][x] == '1')
+	else if (is_wall(y, x, map))
 		return (0);
 	else if (map[y][x] == '0')
 	{

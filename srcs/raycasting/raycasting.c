@@ -6,82 +6,129 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:08:42 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/25 19:17:11 by mrouves          ###   ########.fr       */
+/*   Updated: 2025/04/01 14:35:12 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <raycasting.h>
+#include "raycasting.h"
+#include "Cub3D.h"
+#include "structs.h"
+#include <pthread.h>
 
-double	get_fps(void)
+void	clear_window(t_data *data, t_ray *ray)
 {
-	double					fps;
-	static struct timeval	val_cur;
-	static struct timeval	val_last;
-
-	if (val_last.tv_sec == 0 && val_last.tv_usec == 0)
-		gettimeofday(&val_last, 0);
-	gettimeofday(&val_cur, 0);
-	fps = (val_cur.tv_sec - val_last.tv_sec)
-		+ (val_cur.tv_usec - val_last.tv_usec) / 1000000.0;
-	val_last = val_cur;
-	return (fps);
-}
-
-t_texture	*get_texture(t_ray *ray, t_data *data)
-{
-	if (ray->side)
-	{
-		if (ray->raydir_y > 0)
-			return (&data->we);
-		return (&data->ea);
-	}
-	if (ray->raydir_x > 0)
-		return (&data->so);
-	return (&data->no);
-}
-
-int has_moove(t_data *data)
-{
-	int i;
+	int				i;
 
 	i = 0;
-	while (i < 256)
-		if (data->keys[i++])
-			return (1);
-	return (0);
+	if (PRINT_SKY_TEXTURES)
+	{
+		mlx_clear_window(data->mlx, data->win.win, (mlx_color){.rgba = 0});
+		return ;
+	}
+	i = 0;
+	mlx_clear_window(data->mlx, data->win.win, data->sky_colors);
+	i = 0;
+	ft_memset(data->textures, 0, sizeof(mlx_color) * ray->width * ray->height);
+	while (i < ray->width * ray->height + ray->pitch * ray->width && i > 0)
+		data->textures[i++] = data->sky_colors;
+	i = (ray->width * ray->height / 2) + ray->pitch * ray->width;
+	while (i < ray->width * ray->height && i > 0)
+		data->textures[i++] = data->floor_colors;
+}
+
+void	*raycast_thread(void *param)
+{
+	t_thread_data	*thread_data;
+	t_data			data;
+	t_ray			ray;
+	int				x;
+
+	thread_data = (t_thread_data *)param;
+	data = thread_data->data;
+	ray = thread_data->ray;
+	x = thread_data->start_x;
+	while (x < thread_data->end_x)
+	{
+		init_value_raycasting(&ray, x);
+		dda(&ray);
+		send_ray(&data, &ray);
+		trace_line(&data, &ray);
+		update_textures(&data, &ray, x);
+		ray.zbuffer[x] = ray.perpwalldist;
+		x++;
+	}
+	return (NULL);
+}
+
+void	threading_raycast(t_data *data, t_ray *ray)
+{
+	pthread_t		threads[NUM_THREADS];
+	t_thread_data	thread_data[NUM_THREADS];
+	int				step;
+	int				i;
+
+	step = ray->width / NUM_THREADS;
+	i = -1;
+	while (++i < NUM_THREADS)
+	{
+		thread_data[i].data = *data;
+		thread_data[i].ray = *ray;
+		thread_data[i].start_x = i * step;
+		thread_data[i].end_x = (i + 1) * step;
+		if (i == NUM_THREADS - 1)
+			thread_data[i].end_x = ray->width;
+		pthread_create(&threads[i], NULL, raycast_thread, &thread_data[i]);
+		usleep(1);
+	}
+	i = -1;
+	while (++i < NUM_THREADS)
+		pthread_join(threads[i], NULL);
+}
+
+void	bot(t_data *data, t_ray *ray, t_sprite *sprite)
+{
+	if (ray->pos.x > sprite->pos.x && sprite->pos.x + 0.025 < ray->pos.x
+		&& !is_wall(sprite->pos.x + 0.025, sprite->pos.y, data->map))
+		sprite->pos.x += 0.025;
+	else if (ray->pos.x < sprite->pos.x && sprite->pos.x - 0.025 > ray->pos.x
+		&& !is_wall(sprite->pos.x - 0.025, sprite->pos.y, data->map))
+		sprite->pos.x -= 0.025;
+	if (ray->pos.y > sprite->pos.y && sprite->pos.y + 0.025 < ray->pos.y
+		&& !is_wall(sprite->pos.x, sprite->pos.y + 0.025, data->map))
+		sprite->pos.y += 0.025;
+	else if (ray->pos.y < sprite->pos.y && sprite->pos.y - 0.025 > ray->pos.y
+		&& !is_wall(sprite->pos.x, sprite->pos.y - 0.025, data->map))
+		sprite->pos.y -= 0.025 ;
+	if (fabs(sprite->pos.x - ray->pos.x) < 0.2
+		&& fabs(sprite->pos.y - ray->pos.y) < 0.2)
+		mlx_loop_end(data->mlx);
 }
 
 void	raycaster(void *params)
 {
-	t_data	*data;
-	t_ray	*ray;
-	double	fps;
-	int		x;
+	t_data			*data;
+	t_ray			*ray;
 
 	data = (t_data *)params;
 	ray = &data->ray;
-	fps = get_fps();
-	ray->movespeed = fps * ray->speed_mov;
-	ray->rotspeed = fps * ray->speed_rot;
-	x = 0;
-	mlx_clear_window(data->mlx, data->win.win, (mlx_color){.rgba = 0});
+	clear_window(data, ray);
+	if (PRINT_SKY_TEXTURES)
+		threading_raycast_sky_floor(data, ray);
 	if (has_moove(data))
-	{
-		render_sky_floor(data, ray);
-		while (x < ray->width)
-		{
-			init_value_raycasting(ray, x);
-			dda(ray);
-			send_ray(data, ray);
-			trace_line(ray);
-			update_textures(data, ray, x);
-			x++;
-		}
-		create_minimap(data, (t_vec){.x = 0, .y = ray->width - 350}, (t_vec){.x = 340, .y = 340});
-	}
-	mlx_pixel_put_region(data->mlx, data->win.win, 0, 0, ray->width, ray->height, data->textures);
-	mlx_put_image_to_window(data->mlx, data->win.win, data->test.img, ray->width - data->test.width, ray->height - data->test.height);
+		threading_raycast(data, ray);
+	raycasting_sprites(data, ray);
+	create_minimap(data, (t_vec){.x = 15, .y = ray->width - 360},
+		(t_vec){.x = 200, .y = 340});
+	mlx_pixel_put_region(data->mlx, data->win.win, 0, 0, ray->width,
+		ray->height, data->textures);
+	mlx_put_image_to_window(data->mlx, data->win.win, data->test.img, ray->width
+		- data->test.width, ray->height - data->test.height);
 	print_fps(data, 0);
 	data->keys[255] = 0;
 	print_coords(data);
+	/*if (BOT && NB_SPRITES > 0)
+	{
+		bot(data, ray, &data->sprites[0]);
+		bot(data, ray, &data->sprites[1]);
+	}*/
 }

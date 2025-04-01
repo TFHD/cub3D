@@ -6,11 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:12:41 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/25 18:11:22 by mrouves          ###   ########.fr       */
+/*   Updated: 2025/03/31 19:28:27 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parsing.h>
+#include "Cub3D.h"
 
 int	print_error(char *str, char *arg, int error)
 {

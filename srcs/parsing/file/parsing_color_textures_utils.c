@@ -6,11 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 05:11:43 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/25 18:11:37 by mrouves          ###   ########.fr       */
+/*   Updated: 2025/03/31 19:44:19 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parsing.h>
+#include "Cub3D.h"
 
 int	free_textures(t_data *data, int textures_collect,
 					int colors_collect, int error)

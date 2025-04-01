@@ -6,11 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 23:02:36 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/07 22:42:25 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:42:52 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "Cub3D.h"
 
 void	recursion_management_init(t_recursion_management *rec_man)
 {
