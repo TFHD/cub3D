@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:10:14 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 17:59:23 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:15:17 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void		update_textures(t_data *data, t_ray *ray, int x);
 void		trace_line(t_data *data, t_ray *ray);
 t_texture	*get_texture(t_ray *ray, t_data *data);
 void		init_value_raycasting(t_ray *ray, int x);
-void		*render_sky_floor(void *param);
 int			in_map(int x, int y, char **map);
 void		raycasting_sprites(t_data *data, t_ray *ray);
 void		door_handler_ray(char **map, t_ray *ray);

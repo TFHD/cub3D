@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 10:50:19 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 18:17:30 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:15:11 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 #include <pthread.h>
 #include <stdio.h>
 
-void	calc_distance(t_ray *ray, int y, t_vecf *floor_step, t_vecf *floor)
+static inline __attribute__((always_inline)) void	calc_distance(
+	t_ray *ray, int y, t_vecf *floor_step, t_vecf *floor)
 {
 	float	pos_z;
 	float	row_distance;
 	float	p;
 
-	p = ray->height * 0.5 + ray->pitch;
+	p = (ray->height >> 1) + ray->pitch;
 	pos_z = p - ray->pitch;
 	if (y > p && ray->pitch < PITCH_MAX)
 		row_distance = pos_z / (y - p);
@@ -34,7 +35,8 @@ void	calc_distance(t_ray *ray, int y, t_vecf *floor_step, t_vecf *floor)
 	floor->y = ray->pos.y + row_distance * (ray->dir.y - ray->plane.y);
 }
 
-void	get_texture_sky_floor(t_data *data, t_ray *ray, t_vec *tex, t_vec *vec)
+static inline __attribute__((always_inline)) void	get_texture_sky_floor(
+	t_data *data, t_ray *ray, t_vec *tex, t_vec *vec)
 {
 	mlx_color	color;
 	int			index;
@@ -48,7 +50,8 @@ void	get_texture_sky_floor(t_data *data, t_ray *ray, t_vec *tex, t_vec *vec)
 		data->textures[index] = color;
 }
 
-void	*render_sky_floor(void *param)
+static inline __attribute__((always_inline)) void	*render_sky_floor(
+	void *param)
 {
 	t_thread_data	*tdata;
 	t_skyfloor_draw	draw;

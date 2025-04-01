@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 04:53:37 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 18:19:34 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:21:34 by mrouves          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,14 @@
 
 void	dda(t_ray *ray)
 {
+	ray->steps.x = (ray->raydir.x >= 0) - (ray->raydir.x < 0);
+	ray->steps.y = (ray->raydir.y >= 0) - (ray->raydir.y < 0);
+	ray->sidedist.x = (ray->map.x + 1.0 - ray->pos.x) * ray->deltadist.x;
+	ray->sidedist.y = (ray->map.y + 1.0 - ray->pos.y) * ray->deltadist.y;
 	if (ray->raydir.x < 0)
-	{
-		ray->steps.x = -1;
 		ray->sidedist.x = (ray->pos.x - ray->map.x) * ray->deltadist.x;
-	}
-	else
-	{
-		ray->steps.x = 1;
-		ray->sidedist.x = (ray->map.x + 1.0 - ray->pos.x) * ray->deltadist.x;
-	}
 	if (ray->raydir.y < 0)
-	{
-		ray->steps.y = -1;
 		ray->sidedist.y = (ray->pos.y - ray->map.y) * ray->deltadist.y;
-	}
-	else
-	{
-		ray->steps.y = 1;
-		ray->sidedist.y = (ray->map.y + 1.0 - ray->pos.y) * ray->deltadist.y;
-	}
 }
 
 void	send_ray(t_data *data, t_ray *ray)
@@ -75,9 +63,9 @@ void	update_textures(t_data *data, t_ray *ray, int x)
 	if ((ray->side == 0 && ray->raydir.x > 0)
 		|| (ray->side == 1 && ray->raydir.y < 0))
 		ray->tex.x = tex->width - ray->tex.x - 1;
-	ray->step = 1.0 * tex->height / ray->lineheight;
+	ray->step = (double)tex->height / ray->lineheight;
 	ray->texpos = (ray->drawstart - ray->pitch - data->utils.mid_height
-			+ (double)ray->lineheight * 0.5) * ray->step;
+			+ (double)(ray->lineheight >> 1)) * ray->step;
 	if (in_map(ray->map.x, ray->map.y, data->map))
 	{
 		while (ray->drawstart < ray->drawend)
@@ -99,10 +87,11 @@ void	trace_line(t_data *data, t_ray *ray)
 	else
 		ray->perpwalldist = (ray->sidedist.y - ray->deltadist.y);
 	ray->lineheight = (int)(ray->height / ray->perpwalldist);
-	ray->drawstart = -ray->lineheight / 2 + data->utils.mid_height + ray->pitch;
+	ray->drawstart = -(ray->lineheight >> 1)
+		+ data->utils.mid_height + ray->pitch;
 	if (ray->drawstart < 0)
 		ray->drawstart = 0;
-	ray->drawend = ray->lineheight * 0.5 + data->utils.mid_height + ray->pitch;
+	ray->drawend = (ray->lineheight >> 1) + data->utils.mid_height + ray->pitch;
 	if (ray->drawend >= ray->height)
 		ray->drawend = ray->height;
 	if (ray->side == 0)
@@ -114,7 +103,7 @@ void	trace_line(t_data *data, t_ray *ray)
 
 void	init_value_raycasting(t_ray *ray, int x)
 {
-	ray->camera_x = 2 * x / (double)ray->width - 1;
+	ray->camera_x = (x << 1) / (double)ray->width - 1;
 	ray->raydir.x = ray->dir.x + ray->plane.x * ray->camera_x;
 	ray->raydir.y = ray->dir.y + ray->plane.y * ray->camera_x;
 	ray->map.x = (int)floor(ray->pos.x);
