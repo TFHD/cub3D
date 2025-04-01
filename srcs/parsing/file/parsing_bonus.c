@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "Cub3D.h"
+#include "Cub3D_bonus.h"
 
 int	stock_map(t_data *data, char *line, int fd, int size)
 {

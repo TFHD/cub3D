@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "Cub3D_bonus.h"
 #include <fcntl.h>
 
 void	set_directions(t_data *data, double fov)

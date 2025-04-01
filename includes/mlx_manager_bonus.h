@@ -13,7 +13,7 @@
 #ifndef MLX_MANAGER_H
 # define MLX_MANAGER_H
 
-# include <structs.h>
+# include <structs_bonus.h>
 
 void	init_mlx_core(t_data *data, t_infos infos);
 void	destroy_mlx_core(t_data *data);

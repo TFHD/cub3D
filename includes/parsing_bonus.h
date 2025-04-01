@@ -15,7 +15,7 @@
 
 # include <fcntl.h>
 # include <unistd.h>
-# include <structs.h>
+# include <structs_bonus.h>
 # include <libft.h>
 
 # define ERROR "Error\n"

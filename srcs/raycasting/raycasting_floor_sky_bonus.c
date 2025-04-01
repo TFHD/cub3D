@@ -10,9 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "Cub3D_bonus.h"
 #include <pthread.h>
-#include <stdio.h>
 
 static inline __attribute__((always_inline)) void	calc_distance(
 	t_ray *ray, int y, t_vecf *floor_step, t_vecf *floor)

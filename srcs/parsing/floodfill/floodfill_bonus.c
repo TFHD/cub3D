@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "Cub3D_bonus.h"
 
 static int	recursion_management(t_recursion_management *rec_man,
 								int *x, int *y, char **map)

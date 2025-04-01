@@ -13,9 +13,9 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <parsing.h>
-# include <raycasting.h>
-# include <mlx_manager.h>
+# include <parsing_bonus.h>
+# include <raycasting_bonus.h>
+# include <mlx_manager_bonus.h>
 
 # define HEIGHT 940
 # define WIDTH 1540

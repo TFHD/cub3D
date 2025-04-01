@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "Cub3D_bonus.h"
 #include <pthread.h>
 
 void	clear_window(t_data *data, t_ray *ray)

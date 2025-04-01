@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
-#include "mlx_manager.h"
+#include "Cub3D_bonus.h"
 
 static inline __attribute__((always_inline)) void	matricial_transform(
 	t_ray *ray, t_sp_draw *sp_draw, t_sprite *sprite)

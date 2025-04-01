@@ -13,8 +13,8 @@
 #ifndef RAYCASTING_H
 # define RAYCASTING_H
 
-# include <structs.h>
-# include <parsing.h>
+# include <structs_bonus.h>
+# include <parsing_bonus.h>
 # include <math.h>
 # include <sys/time.h>
 

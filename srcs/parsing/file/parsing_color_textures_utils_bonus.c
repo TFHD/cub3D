@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "Cub3D_bonus.h"
 
 int	free_textures(t_data *data, int textures_collect,
 					int colors_collect, int error)

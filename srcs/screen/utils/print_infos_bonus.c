@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <sys/time.h>
-#include "Cub3D.h"
+#include "Cub3D_bonus.h"
 
 void	print_coords(void *data_ptr)
 {
