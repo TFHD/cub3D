@@ -6,12 +6,12 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:36:16 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 17:27:36 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 18:12:56 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cub3D.h"
-#include <stdio.h>
+#include "structs.h"
 
 void	load_image(t_data *data, t_texture *tex)
 {
@@ -44,6 +44,20 @@ void	destroy_mlx_image_core(t_data *data)
 		mlx_destroy_image(data->mlx, *data->imgs[i++]);
 }
 
+void	free_sprites(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < NB_SPRITES)
+	{
+		free(data->sprites[i].tex[0].colors);
+		free(data->sprites[i].tex[1].colors);
+		i++;
+	}
+	free(data->sprites);
+}
+
 void	destroy_mlx_core(t_data *data)
 {
 	free(data->textures);
@@ -60,8 +74,8 @@ void	destroy_mlx_core(t_data *data)
 	free(data->door.texture_path);
 	free(data->door.colors);
 	destroy_mlx_image_core(data);
-	free(data->sprites);
 	free(data->ray.zbuffer);
+	free_sprites(data);
 	mlx_destroy_window(data->mlx, data->win.win);
 	mlx_destroy_context(data->mlx);
 }

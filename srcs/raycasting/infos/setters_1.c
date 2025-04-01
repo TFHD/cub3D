@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 00:54:05 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 17:59:52 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 18:13:59 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void	set_sprites(t_data *data)
 	tex2 = ft_strdup("./textures/lebron1.png");
 	set_sprite(data, (t_vecf){2, 21}, tex, tex2);
 	set_sprite(data, (t_vecf){4.5, 21}, tex, tex2);
+	free(tex);
+	free(tex2);
 	while (++i < NB_SPRITES)
 		data->sprite_ord[i] = i;
 }

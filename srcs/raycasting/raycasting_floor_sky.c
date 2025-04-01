@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 10:50:19 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 17:17:57 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 18:17:30 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,15 @@ void	calc_distance(t_ray *ray, int y, t_vecf *floor_step, t_vecf *floor)
 void	get_texture_sky_floor(t_data *data, t_ray *ray, t_vec *tex, t_vec *vec)
 {
 	mlx_color	color;
+	int			index;
 
+	index = vec->y * ray->width + vec->x;
 	if (vec->y > data->utils.mid_height + ray->pitch)
 		color = data->floor.colors[data->floor.width * tex->y + tex->x];
 	else
 		color = data->sky.colors[data->sky.width * tex->y + tex->x];
-	data->textures[vec->y * ray->width + vec->x] = color;
+	if (index >= 0 && index < ray->width * ray->height)
+		data->textures[index] = color;
 }
 
 void	*render_sky_floor(void *param)
@@ -51,7 +54,7 @@ void	*render_sky_floor(void *param)
 	t_skyfloor_draw	draw;
 
 	tdata = (t_thread_data *)param;
-	draw.index.x = tdata->start_x - 1;
+	draw.index.x = tdata->start_x;
 	draw.index.y = -1;
 	while (draw.index.x++ < tdata->end_x)
 	{

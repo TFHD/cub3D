@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:08:42 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 17:56:38 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 18:20:55 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	clear_window(t_data *data, t_ray *ray)
 	if (PRINT_SKY_TEXTURES)
 	{
 		mlx_clear_window(data->mlx, data->win.win, (mlx_color){.rgba = 0});
+		ft_memset(data->textures, 0, sizeof(mlx_color)
+			* ray->width * ray->height);
 		return ;
 	}
 	i = 0;

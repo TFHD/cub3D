@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:01:54 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 17:56:25 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 18:15:11 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define PITCH_MAX 1200
 # define PITCH_MIN -1200
 # define BOT 0
-# define PRINT_SKY_TEXTURES 0
+# define PRINT_SKY_TEXTURES 1
 # define NUM_THREADS 64
 # define SPEEDBOT 0.025
 
