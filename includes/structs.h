@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:20:10 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 14:33:48 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:45:44 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ typedef struct s_utils
 typedef struct s_sprite
 {
 	t_vecf		pos;
-	t_texture	tex;
+	t_texture	tex[2];
 }				t_sprite;
 
 typedef struct s_data

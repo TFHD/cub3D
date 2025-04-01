@@ -6,11 +6,12 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:36:16 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/31 23:02:36 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:27:36 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cub3D.h"
+#include <stdio.h>
 
 void	load_image(t_data *data, t_texture *tex)
 {

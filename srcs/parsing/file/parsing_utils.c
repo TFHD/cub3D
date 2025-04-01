@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:12:41 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/31 19:28:27 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:26:42 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 int	print_error(char *str, char *arg, int error)
 {
+	int	i;
+
+	i = 0;
+	if (ft_strcmp(str, ERROR_OPEN) && ft_strcmp(str, ERROR_NAME_FILE))
+		i++;
 	if (error)
 		write(2, ERROR, ft_strlen(ERROR));
 	if (str)
 		write(2, str, ft_strlen(str));
 	if (arg)
-		write(2, arg, ft_strlen(arg) - 1);
+		write(2, arg, ft_strlen(arg) - i);
 	write(2, "\n\e[0m", 5);
 	return (1);
 }

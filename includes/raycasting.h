@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:10:14 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/31 22:51:49 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:59:23 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void		threading_raycast_sky_floor(t_data *data, t_ray *ray);
 
 void		torch_effect(t_data *data, t_ray *ray, int x, int index);
 void		create_minimap(t_data *data, t_vec pos, t_vec size);
+int			give_type_texture(int incr);
 
 double		get_fps(void);
 int			has_moove(t_data *data);

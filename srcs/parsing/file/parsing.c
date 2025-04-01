@@ -6,10 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:21:14 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/31 19:26:55 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:43:13 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parsing.h"
 #include "Cub3D.h"
 
 void	stock_map(t_data *data, char *line, int fd, int size)
@@ -105,6 +106,8 @@ int	parsing_map(t_data *data, char *file)
 
 int	parsing(int ac, char **av, t_data *data)
 {
+	if (check_files_are_here())
+		return (print_error(ERROR_MISSING_FILES, NULL, TRUE));
 	if (parsing_args(ac, av))
 		return (1);
 	if (parsing_map(data, av[1]))

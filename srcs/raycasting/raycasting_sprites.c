@@ -6,11 +6,12 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 06:44:56 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/31 22:06:38 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 18:00:56 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cub3D.h"
+#include "mlx_manager.h"
 
 void	matricial_transform(t_ray *ray, t_sp_draw *sp_draw, t_sprite *sprite)
 {
@@ -51,18 +52,20 @@ void	draw_sprite_line(t_data *data, t_sp_draw *sp_draw,
 	int			dimension;
 	mlx_color	color;
 	t_ray		*ray;
+	int			type;
 
 	ray = &data->ray;
+	type = give_type_texture(1);
 	dimension = i.y * 256 - ray->height
 		* 128 + sp_draw->sprite_size.y * 128;
-	sp_draw->tex.y = ((dimension * sp->tex.height)
+	sp_draw->tex.y = ((dimension * sp->tex[type].height)
 			/ sp_draw->sprite_size.y) / 256;
-	if (sp_draw->tex.y == sp->tex.height - 1 || sp_draw->tex.y < 0)
+	if (sp_draw->tex.y == sp->tex[type].height - 1 || sp_draw->tex.y < 0)
 		color.rgba = 0x0;
-	else if (sp->tex.width * sp_draw->tex.y
-		+ sp_draw->tex.x < sp->tex.width * sp->tex.height)
-		color = sp->tex.colors
-		[sp->tex.width * sp_draw->tex.y + sp_draw->tex.x];
+	else if (sp->tex[type].width * sp_draw->tex.y
+		+ sp_draw->tex.x < sp->tex[type].width * sp->tex[type].height)
+		color = sp->tex[type].colors
+		[sp->tex[type].width * sp_draw->tex.y + sp_draw->tex.x];
 	if ((color.rgba & 0xFFFFFF00) != 0 && ((i.y + ray->pitch)
 			* ray->width + i.x > 0 && (i.y + ray->pitch)
 			* ray->width + i.x < ray->width * ray->height))
@@ -73,7 +76,9 @@ void	draw_sprite(t_data *data, t_ray *ray, t_sp_draw *sp_draw, t_sprite *sp)
 {
 	int			x;
 	int			y;
+	int			type;
 
+	type = give_type_texture(0);
 	x = sp_draw->draw_x.x - 1;
 	y = sp_draw->draw_y.x - 1;
 	sp_draw->tex.y = 0;
@@ -81,7 +86,7 @@ void	draw_sprite(t_data *data, t_ray *ray, t_sp_draw *sp_draw, t_sprite *sp)
 	{
 		sp_draw->tex.x = (int)(256 * (x - (-sp_draw->sprite_size.x
 						/ 2 + sp_draw->sprite_screen.x))
-				* sp->tex.width / sp_draw->sprite_size.x) / 256;
+				* sp->tex[type].width / sp_draw->sprite_size.x) / 256;
 		if (sp_draw->transform.y > 0 && sp_draw->transform.y < ray->zbuffer[x])
 		{
 			while (++y < sp_draw->draw_y.y)

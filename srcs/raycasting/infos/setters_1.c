@@ -6,11 +6,12 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 00:54:05 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 14:31:46 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:59:52 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cub3D.h"
+#include <fcntl.h>
 
 void	set_directions(t_data *data, double fov)
 {
@@ -49,13 +50,15 @@ void	set_utils(t_utils *utils, t_infos infos)
 	utils->flash_light = 0;
 }
 
-void	set_sprite(t_data *data, t_vecf pos, char *file)
+void	set_sprite(t_data *data, t_vecf pos, char *file, char *file2)
 {
 	static int	i;
 
 	data->sprites[i].pos = pos;
-	data->sprites[i].tex.texture_path = file;
-	load_image(data, &data->sprites[i].tex);
+	data->sprites[i].tex[0].texture_path = file;
+	data->sprites[i].tex[1].texture_path = file2;
+	load_image(data, &data->sprites[i].tex[0]);
+	load_image(data, &data->sprites[i].tex[1]);
 	i++;
 }
 
@@ -88,13 +91,15 @@ void	set_win_player_textures_infos(t_data *data, t_infos infos)
 void	set_sprites(t_data *data)
 {
 	char	*tex;
+	char	*tex2;
 	int		i;
 
 	i = -1;
 	data->sprites = malloc(sizeof(t_sprite) * NB_SPRITES);
-	tex = ft_strdup("./textures/cobble.png");
-	set_sprite(data, (t_vecf){2, 21}, tex);
-	set_sprite(data, (t_vecf){4.5, 21}, tex);
+	tex = ft_strdup("./textures/lebron.jpg");
+	tex2 = ft_strdup("./textures/lebron1.png");
+	set_sprite(data, (t_vecf){2, 21}, tex, tex2);
+	set_sprite(data, (t_vecf){4.5, 21}, tex, tex2);
 	while (++i < NB_SPRITES)
 		data->sprite_ord[i] = i;
 }

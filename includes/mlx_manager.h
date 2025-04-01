@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:47:44 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/31 22:51:32 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:59:01 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	key_release_event(int key, void *params);
 void	key_event(int key, void *params);
 void	event_manager(t_data *data);
 void	update_pos(void *params);
+int		check_files_are_here(void);
 
 void	move_forward_back(t_data *data, t_ray *ray);
 void	move_left_right(t_data *data, t_ray *ray);
@@ -39,6 +40,7 @@ void	left(t_data *data, t_ray *ray, t_vecf *vec);
 void	right(t_data *data, t_ray *ray, t_vecf *vec);
 void	turn_around(t_data *data, t_ray *ray, t_vec *mouse, t_vecf offset);
 void	speed_handler(t_data *data, t_ray *ray);
+int		check_files_are_here(void);
 double	get_fps(void);
 
 #endif

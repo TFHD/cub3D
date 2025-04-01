@@ -6,23 +6,23 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 10:50:19 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/31 22:05:55 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:17:57 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cub3D.h"
-#include "structs.h"
 #include <pthread.h>
+#include <stdio.h>
 
 void	calc_distance(t_ray *ray, int y, t_vecf *floor_step, t_vecf *floor)
 {
 	float	pos_z;
 	float	row_distance;
-	int		p;
+	float	p;
 
 	p = ray->height * 0.5 + ray->pitch;
-	pos_z = ray->height * 0.5 + ray->pitch;
-	if (y > pos_z)
+	pos_z = p - ray->pitch;
+	if (y > p && ray->pitch < PITCH_MAX)
 		row_distance = pos_z / (y - p);
 	else
 		row_distance = pos_z / (p - y);
@@ -51,7 +51,7 @@ void	*render_sky_floor(void *param)
 	t_skyfloor_draw	draw;
 
 	tdata = (t_thread_data *)param;
-	draw.index.x = tdata->start_x;
+	draw.index.x = tdata->start_x - 1;
 	draw.index.y = -1;
 	while (draw.index.x++ < tdata->end_x)
 	{

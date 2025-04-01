@@ -6,7 +6,7 @@
 #    By: mrouves <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 16:59:36 by mrouves           #+#    #+#              #
-#    Updated: 2025/03/31 22:53:55 by sabartho         ###   ########.fr        #
+#    Updated: 2025/04/01 17:59:43 by sabartho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,4 +33,5 @@ SOURCES		:= 	main.c \
 				raycasting/raycasting_maths.c \
 				raycasting/raycasting_floor_sky.c \
 				raycasting/raycasting_utils.c \
-				raycasting/raycasting_sprites.c
+				raycasting/raycasting_sprites.c \
+				raycasting/bonus_utils.c

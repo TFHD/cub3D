@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 04:53:37 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/31 19:42:41 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 18:01:47 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	trace_line(t_data *data, t_ray *ray)
 		ray->drawstart = 0;
 	ray->drawend = ray->lineheight * 0.5 + data->utils.mid_height + ray->pitch;
 	if (ray->drawend >= ray->height)
-		ray->drawend = ray->height - 1;
+		ray->drawend = ray->height;
 	if (ray->side == 0)
 		ray->wall_x = ray->pos.y + ray->perpwalldist * ray->raydir.y;
 	else

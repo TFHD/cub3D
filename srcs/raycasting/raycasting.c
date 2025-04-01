@@ -6,13 +6,11 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:08:42 by sabartho          #+#    #+#             */
-/*   Updated: 2025/04/01 14:35:12 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:56:38 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "raycasting.h"
 #include "Cub3D.h"
-#include "structs.h"
 #include <pthread.h>
 
 void	clear_window(t_data *data, t_ray *ray)
@@ -29,10 +27,13 @@ void	clear_window(t_data *data, t_ray *ray)
 	mlx_clear_window(data->mlx, data->win.win, data->sky_colors);
 	i = 0;
 	ft_memset(data->textures, 0, sizeof(mlx_color) * ray->width * ray->height);
-	while (i < ray->width * ray->height + ray->pitch * ray->width && i > 0)
+	while (i < (ray->width * ray->height / 2) + ray->pitch * ray->width
+		&& i < ray->width * ray->height)
 		data->textures[i++] = data->sky_colors;
 	i = (ray->width * ray->height / 2) + ray->pitch * ray->width;
-	while (i < ray->width * ray->height && i > 0)
+	if (i < 0)
+		i = 0;
+	while (i < ray->width * ray->height)
 		data->textures[i++] = data->floor_colors;
 }
 
@@ -87,20 +88,20 @@ void	threading_raycast(t_data *data, t_ray *ray)
 
 void	bot(t_data *data, t_ray *ray, t_sprite *sprite)
 {
-	if (ray->pos.x > sprite->pos.x && sprite->pos.x + 0.025 < ray->pos.x
-		&& !is_wall(sprite->pos.x + 0.025, sprite->pos.y, data->map))
-		sprite->pos.x += 0.025;
-	else if (ray->pos.x < sprite->pos.x && sprite->pos.x - 0.025 > ray->pos.x
-		&& !is_wall(sprite->pos.x - 0.025, sprite->pos.y, data->map))
-		sprite->pos.x -= 0.025;
-	if (ray->pos.y > sprite->pos.y && sprite->pos.y + 0.025 < ray->pos.y
-		&& !is_wall(sprite->pos.x, sprite->pos.y + 0.025, data->map))
-		sprite->pos.y += 0.025;
-	else if (ray->pos.y < sprite->pos.y && sprite->pos.y - 0.025 > ray->pos.y
-		&& !is_wall(sprite->pos.x, sprite->pos.y - 0.025, data->map))
-		sprite->pos.y -= 0.025 ;
-	if (fabs(sprite->pos.x - ray->pos.x) < 0.2
-		&& fabs(sprite->pos.y - ray->pos.y) < 0.2)
+	if (ray->pos.x > sprite->pos.x && sprite->pos.x + SPEEDBOT < ray->pos.x
+		&& !is_wall(sprite->pos.x + SPEEDBOT, sprite->pos.y, data->map))
+		sprite->pos.x += SPEEDBOT;
+	else if (ray->pos.x < sprite->pos.x && sprite->pos.x - SPEEDBOT > ray->pos.x
+		&& !is_wall(sprite->pos.x - SPEEDBOT, sprite->pos.y, data->map))
+		sprite->pos.x -= SPEEDBOT;
+	if (ray->pos.y > sprite->pos.y && sprite->pos.y + SPEEDBOT < ray->pos.y
+		&& !is_wall(sprite->pos.x, sprite->pos.y + SPEEDBOT, data->map))
+		sprite->pos.y += SPEEDBOT;
+	else if (ray->pos.y < sprite->pos.y && sprite->pos.y - SPEEDBOT > ray->pos.y
+		&& !is_wall(sprite->pos.x, sprite->pos.y - SPEEDBOT, data->map))
+		sprite->pos.y -= SPEEDBOT ;
+	if (fabs(sprite->pos.x - ray->pos.x) < 0.5
+		&& fabs(sprite->pos.y - ray->pos.y) < 0.5)
 		mlx_loop_end(data->mlx);
 }
 
@@ -126,9 +127,6 @@ void	raycaster(void *params)
 	print_fps(data, 0);
 	data->keys[255] = 0;
 	print_coords(data);
-	/*if (BOT && NB_SPRITES > 0)
-	{
+	if (BOT && NB_SPRITES > 0)
 		bot(data, ray, &data->sprites[0]);
-		bot(data, ray, &data->sprites[1]);
-	}*/
 }
