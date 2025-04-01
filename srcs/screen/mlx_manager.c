@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:36:16 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 04:48:07 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:12:59 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 void	init_mlx_core(t_data *data, t_infos infos)
 {
 	data->mlx = mlx_init();
-	set_infos(data, infos);
+	if (set_infos(data, infos))
+		return ;
 	event_manager(data);
 	mlx_add_loop_hook(data->mlx, update_pos, data);
 	mlx_add_loop_hook(data->mlx, raycaster, data);
@@ -31,10 +32,14 @@ void	destroy_mlx_core(t_data *data)
 	free(data->ea.colors);
 	free(data->we.colors);
 	free(data->so.colors);
-	mlx_destroy_image(data->mlx, data->no.img);
-	mlx_destroy_image(data->mlx, data->so.img);
-	mlx_destroy_image(data->mlx, data->ea.img);
-	mlx_destroy_image(data->mlx, data->we.img);
+	if (data->no.img)
+		mlx_destroy_image(data->mlx, data->no.img);
+	if (data->so.img)
+		mlx_destroy_image(data->mlx, data->so.img);
+	if (data->ea.img)
+		mlx_destroy_image(data->mlx, data->ea.img);
+	if (data->we.img)
+		mlx_destroy_image(data->mlx, data->we.img);
 	mlx_destroy_window(data->mlx, data->win.win);
 	mlx_destroy_context(data->mlx);
 }

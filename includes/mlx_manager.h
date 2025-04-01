@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:47:44 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 03:03:19 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:05:55 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	set_speed_mov(t_infos *infos, double mov);
 void	set_speed_rot(t_infos *infos, double rot);
 void	set_height(t_infos *infos, int height);
 void	set_width(t_infos *infos, int width);
-void	set_infos(t_data *data, t_infos infos);
+int		set_infos(t_data *data, t_infos infos);
 
 void	event_manager(t_data *data);
 void	update_pos(void *params);

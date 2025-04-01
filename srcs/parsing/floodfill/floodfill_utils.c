@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 18:42:14 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 18:46:54 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 18:46:18 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int	check_wrong_chars(char **map)
 				&& map[i][j] != 'W' && map[i][j] != 'E'
 				&& map[i][j] != '1' && map[i][j] != '0'
 				&& ft_isspace(map[i][j]) == 0)
+				return (-1);
+			if (ft_strlen_whitespace(map[i]) == 0)
 				return (-1);
 			j++;
 		}

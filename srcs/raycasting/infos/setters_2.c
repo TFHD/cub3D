@@ -6,7 +6,7 @@
 /*   By: sabartho <sabartho@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 00:58:53 by sabartho          #+#    #+#             */
-/*   Updated: 2025/03/08 03:33:54 by sabartho         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:05:10 by sabartho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	load_image(t_data *data, t_texture *tex)
 		tex->width, tex->height, tex->colors);
 }
 
-void	set_infos(t_data *data, t_infos infos)
+int	set_infos(t_data *data, t_infos infos)
 {
 	data->win.info.title = "cub3D";
 	data->win.info.width = infos.width;
@@ -64,10 +64,15 @@ void	set_infos(t_data *data, t_infos infos)
 	data->ray.width = infos.width;
 	data->ray.height = infos.height;
 	data->textures = malloc(sizeof(mlx_color) * infos.width * infos.height);
+	if (!data->textures)
+		return (1);
 	load_image(data, &data->no);
 	load_image(data, &data->so);
 	load_image(data, &data->we);
 	load_image(data, &data->ea);
+	if (!data->ea.img || !data->no.img || !data->so.img || !data->we.img)
+		return (1);
+	return (0);
 }
 
 void	set_width(t_infos *infos, int width)
